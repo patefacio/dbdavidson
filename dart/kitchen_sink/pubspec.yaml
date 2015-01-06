@@ -1,0 +1,24 @@
+name: kitchen_sink
+version: 0.0.0
+dependencies:
+  args: "any"
+  id:
+    git: git://github.com/patefacio/id
+  ebisu:
+    git: git://github.com/patefacio/ebisu
+  ebisu_cpp:
+    git: git://github.com/patefacio/ebisu_cpp
+  json_schema:
+    git: git://github.com/patefacio/json_schema
+  simple_schema:
+    git: git://github.com/patefacio/simple_schema
+
+dependency_overrides:
+  id:
+    git: git://github.com/patefacio/id
+  ebisu:
+#    git: git://github.com/patefacio/ebisu
+     path: /home/dbdavidson/dev/open_source/ebisu
+  json_schema:
+    git: git://github.com/patefacio/json_schema
+

@@ -1,0 +1,27 @@
+name: utilities
+version: 0.0.1
+dependencies:
+  pathos: "any"
+  args: "any"
+  ebisu: "any"
+
+# custom <utilities dependencies>
+
+  ebisu:
+#    git: git://github.com/patefacio/ebisu
+    path: /home/dbdavidson/dev/open_source/ebisu
+
+# end <utilities dependencies>
+
+dev_dependencies:
+  unittest: ">=0.9.0 < 0.10.0"
+  browser: "any"
+
+# custom <utilities dev dependencies>
+# end <utilities dev dependencies>
+
+transformers:
+
+# custom <utilities transformers>
+# end <utilities transformers>
+

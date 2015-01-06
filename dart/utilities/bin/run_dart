@@ -1,0 +1,2 @@
+dart --package-root=$HOME/dev/open_source/dbdavidson/dart/kitchen_sink/packages ~/bin/run_dart.dart "$@"
+
