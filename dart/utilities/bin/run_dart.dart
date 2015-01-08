@@ -136,7 +136,7 @@ main(List<String> args) {
   if(options['checked']) {
     procArgs.insert(0, '--checked');
   }
-
+  procArgs.insert(0, '--enable-async');
   procArgs.addAll(positionals);
 
   print("Running: dart ${procArgs.join(' ')}");
