@@ -53,7 +53,7 @@ main(List<String> args) async {
       ..add(dartProgram)
       ..addAll(programArgs);
 
-    _logger.info('Running ${Platform.executable}, $subArgs');
+    _logger.info('Running [$dartArgs] ${Platform.executable}, [$subArgs]');
     await Process.start(Platform.executable, subArgs)
       .then((Process process) async {
         stdout.addStream(process.stdout);

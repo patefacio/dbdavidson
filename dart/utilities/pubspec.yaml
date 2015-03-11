@@ -1,24 +1,40 @@
 name: utilities
 version: 0.0.1
+author: Daniel Davidson <dbdavidson@yahoo.com>
 dependencies:
   pathos: "any"
   args: "any"
-  ebisu: "any"
+  ebisu:
+      path: /home/dbdavidson/dev/open_source/ebisu
 
 # custom <utilities dependencies>
 
-  ebisu:
+  ebisu: "^0.0.14"
 #    git: git://github.com/patefacio/ebisu
-    path: /home/dbdavidson/dev/open_source/ebisu
+#    path: /home/dbdavidson/dev/open_source/ebisu
+
+#  xgrep: "^0.0.2"
+  xgrep:
+    path: /home/dbdavidson/dev/open_source/xgrep
+#    git: git://github.com/patefacio/xgrep
 
 # end <utilities dependencies>
 
 dev_dependencies:
-  unittest: ">=0.9.0 < 0.10.0"
+  yaml: "any"
+  unittest: ">=0.11.0 < 0.12.0"
   browser: "any"
 
 # custom <utilities dev dependencies>
 # end <utilities dev dependencies>
+
+dependency_overrides:
+# custom <utilities dependency overrides>
+
+  mongo_dart:
+    path: /home/dbdavidson/dev/open_source/mongo_dart
+
+# end <utilities dependency overrides>
 
 transformers:
 

@@ -12,13 +12,38 @@ dependencies:
     git: git://github.com/patefacio/json_schema
   simple_schema:
     git: git://github.com/patefacio/simple_schema
+  unittest: ">=0.11.0"
 
 dependency_overrides:
+
   id:
     git: git://github.com/patefacio/id
+
   ebisu:
 #    git: git://github.com/patefacio/ebisu
-     path: /home/dbdavidson/dev/open_source/ebisu
+    path: /home/dbdavidson/dev/open_source/ebisu
+
+  ebisu_web_ui:
+#    git: git://github.com/patefacio/ebisu_web_ui
+    path: /home/dbdavidson/dev/open_source/ebisu_web_ui
+    
+  ebisu_cpp:
+    path: /home/dbdavidson/dev/open_source/ebisu_cpp
+
+  ebisu_cpp_db:
+    path: /home/dbdavidson/dev/open_source/ebisu_cpp_db
+    
   json_schema:
     git: git://github.com/patefacio/json_schema
+
+  dart_style: "^0.1.6"
+#    path: /home/dbdavidson/dev/open_source/dart_style
+#    git: git://github.com/dart-lang/dart_style
+
+  args: "^0.13.0"
+  
+  xgrep:
+    path: /home/dbdavidson/dev/open_source/xgrep
+
+  collection: "^1.1.0"
 
