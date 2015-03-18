@@ -58,6 +58,7 @@ main(List<String> args) async {
       .then((Process process) async {
         stdout.addStream(process.stdout);
         stderr.addStream(process.stderr);
+        process.stdin.addStream(stdin);
         await process.exitCode.then((int exitCode) {
           print('''
 ----------------------------------------------------------------------

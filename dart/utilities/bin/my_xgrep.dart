@@ -89,9 +89,16 @@ main(List<String> args) async {
 
   // custom <myXgrep main>
 
-  final oss = join(Platform.environment['HOME'], 'dev', 'open_source');
+  final home = Platform.environment['HOME'];
+  final oss = join(home, 'dev', 'open_source');
   await Indexer.withIndexer((Indexer indexer) async {
+
+    await indexer.removeAllItems();
+
     final indices = [];
+
+    gitPrune(p) => new PruneSpec([],
+        [join(p,'.git')]);
 
     dartPrune(p) => new PruneSpec(['.pub'],
         [join(p,'.git'), join(p, 'cache')]);
@@ -100,7 +107,10 @@ main(List<String> args) async {
             .map((p) => join(oss, p))
             .fold({}, (p,e) => p..[e] = dartPrune(e))));
 
-    cppPrune(p) => new PruneSpec([],[]);
+    indices.add(new Index.withPruning(idFromString('ds'),
+            {'/usr/lib/dart/lib': new PruneSpec(['core_stubs'],[])}));
+
+    cppPrune(p) => new PruneSpec([],[join(p,'.git')]);
     indices.add(new Index.withPruning(idFromString('cm'),
             cppMine
             .map((p) => join(oss, p))
@@ -108,10 +118,42 @@ main(List<String> args) async {
     indices.add(new Index(idFromString('cb'), ['/usr/include/boost']));
     indices.add(new Index(idFromString('cs'), ['/usr/include/c++/4.8/']));
 
+    indices.add(new Index.withPruning(idFromString('hist'),
+            { join(oss, 'codegen') : gitPrune(join(oss, 'codegen')) }));
+
+    indices.add(new Index.withPruning(idFromString('thrift'),
+            { join(oss, 'thrift') : gitPrune(join(oss, 'codegen'))  }));
+
+    indices.add(new Index(idFromString('org'), [ join(home, 'orgfiles') ]));
+
     for(final index in indices) {
       await indexer.saveAndUpdateIndex(index);
     }
 
+    final filters = [];
+    filters.add(new Filter(idFromString('dart'), true, [r'\.dart$']));
+
+    filters.add(new Filter(idFromString('web'), true,
+            [r'\.(?:dart|html|js|ts)$']));
+
+    filters.add(new Filter(idFromString('cpp'), true,
+            [r'\.(?:hpp|cpp|c|h|inl|cxx)$']));
+
+    filters.add(new Filter(idFromString('xjs'), false,
+            [r'\.js$']));
+
+    filters.add(new Filter(idFromString('ignore'), false,
+            [r'~$', r'/pubspec.lock', r'/.gitignore\b']));
+
+    filters.add(new Filter(idFromString('rb'), true,
+            [r'\.rb$', r'\.spec$', r'\.gemspec']));
+
+    filters.add(new Filter(idFromString('java'), true,
+            [r'\.java$']));
+
+    for(final filter in filters) {
+      await indexer.persistFilter(filter);
+    }
   })
   .catchError((e) => print('Caught Error $e'));
 
@@ -124,7 +166,7 @@ main(List<String> args) async {
 final dartMine = const [
   'ebisu', 'ebisu_cpp', 'ebisu_cpp_db', 'ebisu_dlang',
   'ebisu_web_ui', 'id', 'json_schema', 'magus',
-  'xgrep',
+  'xgrep', 'plusauri',
 ];
 
 final cppMine = const [
@@ -133,4 +175,3 @@ final cppMine = const [
 
 
 // end <myXgrep global>
-
