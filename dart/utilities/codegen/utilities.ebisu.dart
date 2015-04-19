@@ -31,7 +31,7 @@ main() {
         'package:path/path.dart',
         'async',
         'io',
-      ]
+      ],
     ]
     ..libraries = [
     ];

@@ -118,6 +118,8 @@ main(List<String> args) async {
     indices.add(new Index(idFromString('cb'), ['/usr/include/boost']));
     indices.add(new Index(idFromString('cs'), ['/usr/include/c++/4.8/']));
 
+    indices.add(new Index(idFromString('fcs'), [join(oss, 'fcs')]));
+
     indices.add(new Index.withPruning(idFromString('hist'),
             { join(oss, 'codegen') : gitPrune(join(oss, 'codegen')) }));
 
@@ -125,6 +127,11 @@ main(List<String> args) async {
             { join(oss, 'thrift') : gitPrune(join(oss, 'codegen'))  }));
 
     indices.add(new Index(idFromString('org'), [ join(home, 'orgfiles') ]));
+
+    indices.add(new Index(idFromString('plus'), [ join(oss, 'plusauri') ]));
+
+    indices.add(new Index(idFromString('tins'), [ join(oss, 'libtins') ]));
+
 
     for(final index in indices) {
       await indexer.saveAndUpdateIndex(index);
@@ -166,7 +173,7 @@ main(List<String> args) async {
 final dartMine = const [
   'ebisu', 'ebisu_cpp', 'ebisu_cpp_db', 'ebisu_dlang',
   'ebisu_web_ui', 'id', 'json_schema', 'magus',
-  'xgrep', 'plusauri',
+  'xgrep', 'plusauri', 'simple_schema',
 ];
 
 final cppMine = const [

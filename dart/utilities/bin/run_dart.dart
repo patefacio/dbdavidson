@@ -12,7 +12,7 @@ final _logger = new Logger('runDart');
 main(List<String> args) async {
   Logger.root.onRecord.listen((LogRecord r) =>
       print("${r.loggerName} [${r.level}]:\t${r.message}"));
-  Logger.root.level = Level.OFF;
+  Logger.root.level = Level.INFO;
 
   /// iterate over args and find first arg that is a file:
   int i=0;
@@ -36,6 +36,7 @@ main(List<String> args) async {
     // See if folder containing dartFilePath has 'packages' folder.
     // If not and DEFAULT_DART_PACKAGES env var exists, pass that
     String defaultDartPackages = Platform.environment['DEFAULT_DART_PACKAGES'];
+    _logger.info("Default Dart packages env var set ${defaultDartPackages}");
     if(defaultDartPackages != null && !packagesPathExist) {
       _logger.info("Default Dart packages env var set ${defaultDartPackages}");
 
@@ -53,7 +54,9 @@ main(List<String> args) async {
       ..add(dartProgram)
       ..addAll(programArgs);
 
-    _logger.info('Running [$dartArgs] ${Platform.executable}, [$subArgs]');
+    _logger.info('Running: '
+        '${Platform.executable} ${dartArgs.join(" ")} ${subArgs.join(" ")}');
+
     await Process.start(Platform.executable, subArgs)
       .then((Process process) async {
         stdout.addStream(process.stdout);
