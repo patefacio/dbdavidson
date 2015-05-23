@@ -36,6 +36,7 @@
 (dbd:lang-modes)
 
 (load-file "dbd-utils.el")
+(load-file "dbd-urls.el")
 
 (if t
     (progn
