@@ -10,7 +10,10 @@
 
 (add-to-list 'load-path
              (concat (file-name-as-directory default-directory) "lang-modes"))
-(princ load-path)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; dart support
 (require 'dart-mode)
 (autoload 'dart-mode "dart-mode" "Major mode for editing Dart code." t)
 (add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
