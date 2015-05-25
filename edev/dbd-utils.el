@@ -86,7 +86,7 @@ buffer is not visiting a file."
             ("d" . "rd")
             ("dart" . "run_dart --checked")
             ("yaml" . "pub update")
-            ("cpp" . "runcpp.rb")
+            ("cpp" . "run_cpp")
             ("html" . "firefox")
             )
           )

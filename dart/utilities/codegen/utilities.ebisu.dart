@@ -11,6 +11,9 @@ String _topDir =
       path.absolute(Platform.script.path)));
 
 main() {
+
+  useDartFormatter = true;
+  
   System utilities = system('utilities')
     ..rootPath = _topDir
     ..pubSpec = (pubspec('utilities')
@@ -26,18 +29,60 @@ main() {
       script('run_cpp')
       ..doc = 'Compile the specified C++ file and run it'
       ..imports = [
-        
+        'package:ebisu/ebisu.dart',
+        'package:path/path.dart',
+        'package:quiver/iterables.dart',
       ]
       ..args = [
         scriptArg('filename')
         ..doc = 'The file to compile and run'
-        ..abbr = 'f'
+        ..isRequired = true
+        ..abbr = 'f',
+        scriptArg('compile_arg')
+        ..doc = 'Arg passed to compiler'
+        ..abbr = 'c'
+        ..isRequired = false
+        ..isMultiple = true,
+        scriptArg('link_arg')
+        ..doc = 'Arg passed to linker'
+        ..abbr = 'l'
+        ..isRequired = false        
+        ..isMultiple = true,
+
+      ]
+      ..enums = [
+
+        enum_('common_lib')
+        ..doc = 'Some commonly used libs to pull in if necessary'
+        ..hasLibraryScopedValues = true        
+        ..values = [ 'boost_regex', 'boost_filesystem', 'boost_system' ],
+        enum_('common_include')
+        ..doc = 'Some commonly used packages to pull in if necessary'        
+        ..hasLibraryScopedValues = true
+        ..values = [ 'boost', 'catch_test', ],
       ]
       ..classes = [
+
+        class_('locator')
+        ..doc = 'Tries to find any required libs/headers'
+        ..members = [
+          member('includes')
+          ..type = 'List<String>'..classInit = [],
+          member('required_libs')
+          ..type = 'Set<String>'..type = 'Set'..classInit = 'new Set()',
+          member('include_paths')
+          ..type = 'Set<String>'..type = 'Set'..classInit = 'new Set()',          
+          member('lib_paths')
+          ..type = 'Set<String>'..type = 'Set'..classInit = 'new Set()',          
+          member('libs')
+          ..type = 'Set<String>'..type = 'Set'..classInit = 'new Set()',
+        ],
+        
         class_('builder')
+        ..doc = 'Tries to build the file'        
         ..members = [
           member('filename')..doc = 'File to compile',
-          member('include')
+          member('includes')
           ..doc = 'Files included by filename'
           ..type = 'List<String>'..classInit = [],
         ]
