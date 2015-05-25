@@ -1,1 +1,1 @@
-dart --package-root=$HOME/dev/open_source/dbdavidson/dart/kitchen_sink/packages ~/bin/run_cpp.dart --checked "$@"
+dart --package-root=$HOME/dev/open_source/dbdavidson/dart/kitchen_sink/packages ~/bin/run_cpp.dart "$@"
