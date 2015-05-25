@@ -1,6 +1,5 @@
 #!/usr/bin/env dart
 /// Place to flesh out my searching need
-
 import 'dart:async';
 import 'dart:io';
 import 'package:args/args.dart';
@@ -8,10 +7,8 @@ import 'package:id/id.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart';
 import 'package:xgrep/xgrep.dart';
-
 //! The parser for this script
 ArgParser _parser;
-
 //! The comment and usage associated with this script
 void _usage() {
   print(r'''
@@ -19,7 +16,6 @@ Place to flesh out my searching need
 ''');
   print(_parser.getUsage());
 }
-
 //! Method to parse command line options.
 //! The result is a map containing all options, including positional options
 Map _parseArgs(List<String> args) {
@@ -76,9 +72,7 @@ Select log level from:
     throw e;
   }
 }
-
 final _logger = new Logger('myXgrep');
-
 main(List<String> args) async {
   Logger.root.onRecord.listen((LogRecord r) =>
       print("${r.loggerName} [${r.level}]:\t${r.message}"));
@@ -86,7 +80,6 @@ main(List<String> args) async {
   Map argResults = _parseArgs(args);
   Map options = argResults['options'];
   List positionals = argResults['rest'];
-
   // custom <myXgrep main>
 
   final home = Platform.environment['HOME'];
@@ -118,7 +111,12 @@ main(List<String> args) async {
     indices.add(new Index(idFromString('cb'), ['/usr/include/boost']));
     indices.add(new Index(idFromString('cs'), ['/usr/include/c++/4.8/']));
 
-    indices.add(new Index(idFromString('fcs'), [join(oss, 'fcs')]));
+    indices.add(new Index.withPruning(idFromString('fcs'),
+            { join(oss, 'fcs') :
+              new PruneSpec([], [
+                join(oss, 'fcs', 'cmake_build'),
+                join(oss, 'fcs', 'doc'),
+              ]) }));
 
     indices.add(new Index.withPruning(idFromString('hist'),
             { join(oss, 'codegen') : gitPrune(join(oss, 'codegen')) }));
@@ -166,6 +164,7 @@ main(List<String> args) async {
 
   // end <myXgrep main>
 
+
 }
 
 // custom <myXgrep global>
@@ -182,3 +181,4 @@ final cppMine = const [
 
 
 // end <myXgrep global>
+

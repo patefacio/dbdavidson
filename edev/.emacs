@@ -37,6 +37,25 @@
 
 (load-file "dbd-utils.el")
 (load-file "dbd-urls.el")
+(load-file "dbd-current-projects.el")
+(if (file-exists-p "~/.xgrep.el") (load "~/.xgrep.el"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; The following provides color enabled comint
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
+
+(global-linum-mode t)
+(line-number-mode t)
+(column-number-mode t)
+
 
 (if t
     (progn

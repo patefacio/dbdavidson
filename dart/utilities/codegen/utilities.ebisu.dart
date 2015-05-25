@@ -22,6 +22,28 @@ main() {
         ]
     )
     ..scripts = [
+
+      script('run_cpp')
+      ..doc = 'Compile the specified C++ file and run it'
+      ..imports = [
+        
+      ]
+      ..args = [
+        scriptArg('filename')
+        ..doc = 'The file to compile and run'
+        ..abbr = 'f'
+      ]
+      ..classes = [
+        class_('builder')
+        ..members = [
+          member('filename')..doc = 'File to compile',
+          member('include')
+          ..doc = 'Files included by filename'
+          ..type = 'List<String>'..classInit = [],
+        ]
+      ],
+      
+      
       script('my_xgrep')
       ..isAsync = true
       ..doc = 'Place to flesh out my searching need'
@@ -32,6 +54,30 @@ main() {
         'async',
         'io',
       ],
+
+      script('header_deps')
+      ..doc = '''
+In comes output from compiles with -H, out comes a dot file
+'''
+      ..imports = [
+        'async',
+        'io',
+      ]
+      ..classes = [
+        class_('cpp_dependencies')
+        ..doc = '''
+Consumes a stream of compile statements with their header statements as output
+with -H compile switch and determines transitive closure of dependencies
+'''
+        ..members = [
+          member('input')
+          ..doc = '''
+Stream of input lines - will cull all lines that do not
+look like output from compilation with -H switch
+'''
+          ..type = 'Stream'..ctors = [''],
+        ]
+      ]
     ]
     ..libraries = [
     ];

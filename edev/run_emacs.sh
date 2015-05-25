@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-emacs --no-splash -fs -q -l .emacs --name dbd 
+emacs --no-splash -mm -q -l .emacs --name dbd 

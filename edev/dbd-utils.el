@@ -1,3 +1,5 @@
+(defun dbd:restart-network() (interactive)
+       (insert "sudo service network-manager restart"))
 
 (defun clear-eshell ()
   "Clear the eshell buffer."

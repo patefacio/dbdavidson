@@ -17,7 +17,10 @@
 
   (global-set-key "\C-c!"               'run-current-file)
   (global-set-key "\C-c@"               'run-current-file-prompt)
-  
+
+  (global-set-key "\M-g"                'goto-line)
+  (global-set-key "\M-\e"               'eval-expression)
+  (global-set-key "\C-c\C-y"	        'yank-filepath-under-cursor)  
   
   (message "added global keys")
   )
