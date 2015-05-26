@@ -1,7 +1,4 @@
 
-(defvar dbd:user (getenv "USER"))
-(defvar dbd:home (getenv "HOME"))
-
 (defvar dbd:ebisu (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu/" ))
 (defvar dbd:ebisu-cpp (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu_cpp/" ))
 

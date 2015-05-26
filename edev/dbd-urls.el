@@ -35,4 +35,7 @@
   (interactive)
   (org-open-link-from-string "https://github.com/patefacio/magus"))
 
+(defun url:wsjblogs()
+  (interactive)
+  (org-open-link-from-string "http://blogs.wsj.com/moneybeat/"))
 

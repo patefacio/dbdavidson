@@ -168,3 +168,99 @@ File suffix is used to determine what program to run."
     (message (concat "Searching for: " search-tag))
     (org-open-link-from-string search-tag)))
 
+(defun my-mongo ( )   
+   (interactive)   
+   (setq cmd (format "mongod --dbpath=%s/data/mongo_data -vvvvv" dbd:home))
+   (comint-simple-send (make-comint "my-mongo" "bash") cmd)) 
+
+(defun my-mongo-client ( )   
+   (interactive)   
+   (setq cmd "mongo")   
+   (comint-simple-send (make-comint "mongo-client" "bash") cmd)
+   ) 
+
+(defun mongo-shutdown()
+  (shell-command "pkill -15 mongod"))
+
+(defun mongo()
+  (interactive)
+  (my-mongo) (sleep-for 0.5) (my-mongo-client) (display-buffer "*mongo-client*"))
+
+(defun mongo-restart()
+  (interactive)
+  (mongo-shutdown) (sleep-for 0.5) (mongo))
+
+(defun dbd:pry()
+  (interactive)
+  (comint-simple-send (make-comint "pry" "bash") "no_pager; pry"))
+
+(defun uniquify-all-lines-region (start end)
+  "Find duplicate lines in region START to END keeping first occurrence."
+  (interactive "*r")
+  (save-excursion
+    (let ((end (copy-marker end)))
+      (while
+          (progn
+            (goto-char start)
+            (re-search-forward "^\\(.*\\)\n\\(\\(.*\n\\)*\\)\\1\n" end t))
+        (replace-match "\\1\n\\2")))))
+
+(defun uniquify-all-lines-buffer ()
+  "Delete duplicate lines in buffer and keep first occurrence."
+  (interactive "*")
+  (uniquify-all-lines-region (point-min) (point-max)))
+
+
+(defun xgrep(strarg) 
+"Does generic call to xgrep"
+(interactive "sEnter args:") 
+  (grep (format "xgrep.rb %s" strarg))
+  (save-excursion
+    (set-buffer "*grep*")
+    (rename-buffer (format "* grep:(%s)" strarg))))
+
+(defun ixgrep(strarg) 
+"Does generic call to xgrep"
+(interactive "sEnter args:") 
+  (grep (format "xgrep.rb -i %s" strarg))
+  (save-excursion
+    (set-buffer "*grep*")
+    (rename-buffer (format "* grep:-i (%s)" strarg))))
+
+(defun gvim()
+  (interactive) 
+  (shell-command
+   (format "gvim +%d %s &"
+           (+ (count-lines 1 (point)) 1)
+           (buffer-file-name (current-buffer)))))
+
+(defun dbd:restart-network() (interactive)
+       (insert "sudo service network-manager restart"))
+
+
+(defun kill-all-dired-buffers()
+      "Kill all dired buffers."
+      (interactive)
+      (save-excursion
+        (let((count 0))
+          (dolist(buffer (buffer-list))
+            (set-buffer buffer)
+            (when (equal major-mode 'dired-mode)
+              (setq count (1+ count))
+              (kill-buffer buffer)))
+          (message "Killed %i dired buffer(s)." count ))))
+
+(defun dbd:kill-async-buffers() (interactive)
+  (kill-matching-buffers-by-name "Async Shell"))
+(defun dbd:kill-unittest-buffers() (interactive)
+  (kill-matching-buffers-by-name ".*time unittest .*"))
+(defun dbd:kill-rd-buffers() (interactive)
+  (kill-matching-buffers-by-name ".*time rd .*"))
+
+(defun py-profile (args)
+  (interactive "sEnter args:")
+  (let (cmdStr buffname)
+    (setq cmdStr (concat "python -m cProfile -s time " (buffer-file-name) " " args))
+    (setq buffname (format "*Profile(%s)*" cmdStr))
+    (message (concat "Profiling:" cmdStr))
+    (shell-command cmdStr buffname)))

@@ -1,3 +1,6 @@
+(defvar dbd:user (getenv "USER"))
+(defvar dbd:home (file-name-as-directory (getenv "HOME")))
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
@@ -38,6 +41,9 @@
 (load-file "dbd-utils.el")
 (load-file "dbd-urls.el")
 (load-file "dbd-current-projects.el")
+(load-file "dbd-commands-on-yank.el")
+(load-file "dbd-c.el")
+(load-file "dbd-orgmode.el")
 (if (file-exists-p "~/.xgrep.el") (load "~/.xgrep.el"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -56,7 +62,6 @@
 (line-number-mode t)
 (column-number-mode t)
 
-
 (if t
     (progn
       ;; (load-theme 'wheatgrass)
@@ -64,11 +69,24 @@
       ;; (load-theme 'tango)
       ))
 
-(find-file "/home/dbdavidson/dev/open_source/fcs/cpp/ebisu/linux_specific")
-(find-file "/home/dbdavidson/dev/open_source/fcs/cpp/ebisu/linux_specific/cpu_info.hpp")
-(find-file "/home/dbdavidson/dev/open_source/fcs/codegen/bin/libs/linux_specific.dart")
-(find-file "/home/dbdavidson/dev/open_source/dbdavidson/edev/dbd-lang-modes.el")
+;;; (toggle-debug-on-error t)
 
+(find-file
+ (concat
+  (file-name-as-directory dbd:home)
+  "dev/open_source/fcs/cpp/ebisu/linux_specific"))
 
+(find-file
+ (concat
+  (file-name-as-directory dbd:home)
+  "dev/open_source/fcs/cpp/ebisu/linux_specific/cpu_info.hpp"))
 
+(find-file
+ (concat
+  (file-name-as-directory dbd:home)
+  "dev/open_source/fcs/codegen/bin/libs/linux_specific.dart"))
 
+(find-file
+ (concat
+  (file-name-as-directory dbd:home)
+  "dev/open_source/dbdavidson/edev/dbd-lang-modes.el"))
