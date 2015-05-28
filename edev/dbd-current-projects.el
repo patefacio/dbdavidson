@@ -9,8 +9,8 @@
   (dired-maybe-insert-subdir "codegen")
   (dired-maybe-insert-subdir "lib")
   (dired-maybe-insert-subdir "lib/src")
-  (find-file (concat dir "test/runner.dart"))
-  (find-file (concat dir "codegen/*.dart") t))
+  (find-file (concat (file-name-as-directory dir) "test/runner.dart"))
+  (find-file (concat (file-name-as-directory dir) "codegen/*.dart") t))
 
 (defun dbd:ebisu-cpp-dev()
   (interactive)

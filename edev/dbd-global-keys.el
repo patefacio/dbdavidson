@@ -5,6 +5,11 @@
       (save-buffers-kill-emacs)
     nil))
 
+(defun other-window-backward ()
+  "Select the previous window."
+  (interactive)
+  (other-window -1))
+
 (defun dbd:add-global-keys()
   (interactive)
 

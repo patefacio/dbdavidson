@@ -227,6 +227,10 @@ File suffix is used to determine what program to run."
     (set-buffer "*grep*")
     (rename-buffer (format "* grep:-i (%s)" strarg))))
 
+(defun dbd:rmEditBackups()
+  (interactive)
+  (insert "find . -name \\*~ -print | xargs rm"))
+
 (defun gvim()
   (interactive) 
   (shell-command
