@@ -18,10 +18,12 @@
   (global-set-key "\C-x\C-n"	        'next-error)
   (global-set-key "\C-x\C-p"	        'previous-error)
 
+  (global-set-key "\C-x\C-g"	        'ibuffer-list-buffers)
   (global-set-key "\C-xb"		'switch-to-buffer)
-
+  
   (global-set-key "\C-c!"               'run-current-file)
   (global-set-key "\C-c@"               'run-current-file-prompt)
+  (global-set-key "\C-c#"               'format-current-file)
 
   (global-set-key "\C-xp"               'other-window-backward)  
   (global-set-key "\M-g"                'goto-line)

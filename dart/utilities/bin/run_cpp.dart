@@ -122,7 +122,7 @@ class Locator {
   static final _installPath = join(_home, 'install');
   static final _ebisuIncludePath = join(_home, 'dev/open_source/fcs/cpp');
   static final _catchIncludePath = join(_installPath, 'cpp/include/catch');
-  static final _spdlogIncludePath = join(_installPath, 'cpp/include/');  
+  static final _spdlogIncludePath = join(_installPath, 'cpp/include/');
   static final _cppFormatInclude = join(_installPath, 'cpp/include/cppformat');
 
   _addBoost() {
@@ -174,26 +174,24 @@ class Builder {
     final cppFlags = ['--std=c++11']..addAll(locator.cppFlags);
     final target = join(Locator._home, 'snippet');
     cppFlags.add(filename);
-    cppFlags.addAll([ '-o', target]);
+    cppFlags.addAll(['-o', target]);
 
     print('Compiling: clang++ ${cppFlags.join(" ")}');
 
-    Process.run('clang++', cppFlags)
-      .then((ProcessResult results) {
-        print(results.stdout);
-        print(results.stderr);
-        print('Completed build: (${results.exitCode})');
-        if(results.exitCode != 0) {
-          exit(results.exitCode);
-        }
-      })
-      .then((_) => Process.run(target, [])
-          .then((ProcessResult results) {
-            print('----------------------------------------------------------------------');
-            print(results.stdout);
-            print(results.stderr);
-            exit(results.exitCode);
-          }));
+    Process.run('clang++', cppFlags).then((ProcessResult results) {
+      print(results.stdout);
+      print(results.stderr);
+      print('Completed build: (${results.exitCode})');
+      if (results.exitCode != 0) {
+        exit(results.exitCode);
+      }
+    }).then((_) => Process.run(target, []).then((ProcessResult results) {
+      print(
+          '----------------------------------------------------------------------');
+      print(results.stdout);
+      print(results.stderr);
+      exit(results.exitCode);
+    }));
   }
 
   // end <class Builder>

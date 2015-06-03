@@ -40,10 +40,11 @@
 
 (load-file "dbd-utils.el")
 (load-file "dbd-urls.el")
-(load-file "dbd-current-projects.el")
 (load-file "dbd-commands-on-yank.el")
 (load-file "dbd-c.el")
 (load-file "dbd-orgmode.el")
+(load-file "dbd-ibuffer.el")
+(load-file "dbd-mode-line.el")
 (if (file-exists-p "~/.xgrep.el") (load "~/.xgrep.el"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -58,35 +59,29 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'comint-mode-hook 'ansi-color-for-comint-mode-on)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Look-and-feel
 (global-linum-mode t)
 (line-number-mode t)
 (column-number-mode t)
+
+(add-hook 'c-mode-common-hook
+  (lambda()
+    (add-hook 'write-contents-functions
+      (lambda()
+        (save-excursion
+          (delete-trailing-whitespace))))))
 
 (if t
     (progn
       ;; (load-theme 'wheatgrass)
       (load-theme 'leuven)
+      (load-theme 'adwaita)
       ;; (load-theme 'tango)
       ))
 
 ;;; (toggle-debug-on-error t)
 
-(find-file
- (concat
-  (file-name-as-directory dbd:home)
-  "dev/open_source/fcs/cpp/ebisu/linux_specific"))
+(load-file "dbd-current-projects.el")
 
-(find-file
- (concat
-  (file-name-as-directory dbd:home)
-  "dev/open_source/fcs/cpp/ebisu/linux_specific/cpu_info.hpp"))
-
-(find-file
- (concat
-  (file-name-as-directory dbd:home)
-  "dev/open_source/fcs/codegen/bin/libs/linux_specific.dart"))
-
-(find-file
- (concat
-  (file-name-as-directory dbd:home)
-  "dev/open_source/dbdavidson/edev/dbd-lang-modes.el"))
