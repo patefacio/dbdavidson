@@ -107,9 +107,9 @@ main(List<String> args) async {
     indices.add(new Index(idFromString('cb'), ['/usr/include/boost']));
     indices.add(new Index(idFromString('cs'), ['/usr/include/c++/4.8/']));
 
-    indices.add(new Index.withPruning(idFromString('fcs'), {
-      join(oss, 'fcs'): new PruneSpec(
-          [], [join(oss, 'fcs', 'cmake_build'), join(oss, 'fcs', 'doc'),])
+    indices.add(new Index.withPruning(idFromString('cpp_ebisu'), {
+      join(oss, 'cpp_ebisu'): new PruneSpec(
+          [], [join(oss, 'cpp_ebisu', 'cmake_build'), join(oss, 'cpp_ebisu', 'doc'),])
     }));
 
     indices.add(new Index.withPruning(idFromString('hist'), {
@@ -177,6 +177,6 @@ final dartMine = const [
   'simple_schema',
 ];
 
-final cppMine = const ['fcs',];
+final cppMine = const ['cpp_ebisu',];
 
 // end <myXgrep global>
