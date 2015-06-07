@@ -283,3 +283,9 @@ File suffix is used to determine what program to run."
     (setq buffname (format "*Profile(%s)*" cmdStr))
     (message (concat "Profiling:" cmdStr))
     (shell-command cmdStr buffname)))
+
+;;; Nice tip from http://stackoverflow.com/questions/13577286/how-to-run-gdb-many-windows-in-new-frame
+(defun dbd:gdb-other-frame ()
+  (interactive)
+  (select-frame (make-frame))
+  (call-interactively 'gdb))
