@@ -73,13 +73,35 @@
         (save-excursion
           (delete-trailing-whitespace))))))
 
-(if t
-    (progn
-      ;; (load-theme 'wheatgrass)
-      (load-theme 'leuven)
-      (load-theme 'adwaita)
-      ;; (load-theme 'tango)
-      ))
+;; (if t
+;;     (progn
+;;       ;; (load-theme 'wheatgrass)
+;;       (load-theme 'leuven)
+;;       (load-theme 'adwaita)
+;;       ;; (load-theme 'tango)
+;;       ))
+
+
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-emacs-21)
+(set-face-foreground 'minibuffer-prompt "black")
+
+(defun fr:cg() (interactive)
+       (let ((color-theme-is-global nil))
+         (select-frame (make-frame))
+         (set-frame-name "code generation")
+         (color-theme-scintilla)
+         (set-face-foreground 'minibuffer-prompt "black")
+         ))
+
+(defun fr:run() (interactive)
+       (let ((color-theme-is-global nil))
+         (select-frame (make-frame))
+         (set-frame-name "run")         
+         (color-theme-rotor)
+         (set-face-foreground 'minibuffer-prompt "black")
+         ))
 
 ;;; (toggle-debug-on-error t)
 

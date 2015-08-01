@@ -66,7 +66,7 @@ buffer is not visiting a file."
       )))
 
 (defun run-current-file-args (args)
-  (let (extention-alist fname suffix progName cmdStr)
+  (let (extention-alist fname suffix progName cmdStr buffname resultBuff)
     (setq extention-alist ; a keyed list of file suffix to comand-line program to run
           '(
             ("php" . "php")
@@ -88,13 +88,14 @@ buffer is not visiting a file."
             ("yaml" . "pub update")
             ("cpp" . "run_cpp.dart -f")
             ("html" . "firefox")
+            ("psql" . "psql -f")
             )
           )
     (setq fname (buffer-file-name))
     (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
     (setq cmdStr (concat "time " progName " \""   fname "\" " args))
-    (setq buffname (format "*%s*" cmdStr))
+    (setq buffname (format "R(%s) *%s*" (helm-basename fname) cmdStr))
 
     (if (string-equal suffix "el")
         (load-file fname)
@@ -108,10 +109,14 @@ buffer is not visiting a file."
             ;(comint-exec buffname cmdStr)
             (toggle-truncate-lines t)
             (set-buffer "*compilation*")
-;            (compilation-mode)
+            (setq resultBuff (current-buffer))
             (rename-buffer buffname t)
+            )
         (message "No recognized program file suffix for this file.")
-        )))))
+        ))
+    resultBuff
+    )
+  )
 
 (defun run-current-file ()
   "Execute or compile the current file.
@@ -125,6 +130,22 @@ File suffix is used to determine what program to run."
 (defun run-current-file-prompt (args)
   (interactive "sEnter args:")
   (run-current-file-args args))
+
+(defun cg:run() (interactive)
+       (let (compilation-buffer (color-theme-is-global nil))
+         (select-frame (make-frame))
+         (set-frame-name "CG")
+         (toggle-frame-maximized)
+         (color-theme-wheat)
+         (set-face-foreground 'minibuffer-prompt "black")         
+         (setq compilation-buffer (run-current-file))
+         (message "CG buffer is %s" (type-of compilation-buffer))
+                                        ;(switch-to-buffer compilation-buffer)
+         (local-set-key (kbd "TAB") 'cg:written)
+         (next-window)
+         ))
+
+(defun cg:written() (interactive) (occur "Wrote:"))
 
 (defun format-current-file ()
   (interactive)

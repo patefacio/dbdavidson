@@ -18,6 +18,8 @@
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (setq todo-org-capture (concat org-directory "TODO.org"))
 (setq todo-plusauri (concat org-directory "/plusauri/PLUSAURI.org"))
+(setq todo-ebisu-ang (concat org-directory "/plusauri/EBISU_ANG.org"))
+(setq todo-ebisu-py (concat org-directory "/plusauri/EBISU_PY.org"))
 
 (setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
  (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
@@ -114,7 +116,9 @@
 (define-key global-map "\C-cr" 'org-capture)
 (setq org-agenda-files 
       (list 
-;       (concat todo-plusauri)
+       (concat todo-plusauri)
+       (concat todo-ebisu-ang)
+       (concat todo-ebisu-py)              
        (concat org-directory-todo "CODEGEN.org")       
        (concat org-directory "TODO.org")
       ))
@@ -129,10 +133,17 @@
          "* TODO %U %?\n %i\n %a")        
         ("p" "plusauri" entry (file+headline todo-plusauri "Tasks")
          "* TODO %U %?\n %i\n %a")        
-        
+        ("a" "ebisu-ang" entry (file+headline todo-ebisu-ang "Tasks")
+         "* TODO %U %?\n %i\n %a")        
+        ("P" "ebisu-py" entry (file+headline todo-ebisu-py "Tasks")
+         "* TODO %U %?\n %i\n %a")        
         ))
 
 (setq org-startup-folded t)
 (find-file todo-org-capture)
 (find-file todo-plusauri)
+(find-file todo-ebisu-ang)
+(find-file todo-ebisu-py)
 
+(defun org-code-block () (interactive)
+       (insert "#+BEGIN_SRC C++\n\n#+END_SRC"))
