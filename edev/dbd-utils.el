@@ -141,11 +141,10 @@ File suffix is used to determine what program to run."
          (setq compilation-buffer (run-current-file))
          (message "CG buffer is %s" (type-of compilation-buffer))
                                         ;(switch-to-buffer compilation-buffer)
-         (local-set-key (kbd "TAB") 'cg:written)
+         ;(local-set-key (kbd "TAB") 'cg:written)
+         ;(define-key compilation-mode-map (kbd "~") 'cg:written)
          (next-window)
          ))
-
-(defun cg:written() (interactive) (occur "Wrote:"))
 
 (defun format-current-file ()
   (interactive)

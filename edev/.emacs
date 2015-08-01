@@ -107,3 +107,6 @@
 
 (load-file "dbd-current-projects.el")
 
+;;; Following enables jump to written files from ebisu codeten
+(add-to-list 'compilation-error-regexp-alist
+             '("Wrote:[ ]*\\(.*\\)" 1 nil nil))
