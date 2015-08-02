@@ -57,11 +57,35 @@ main(List<String> args) async {
     _logger.info('Running: '
         '${Platform.executable} ${dartArgs.join(" ")} ${subArgs.join(" ")}');
 
+    final _packageFileRe = new RegExp(r"'package:([^']+)':(?:.*line (\d+))?(?:.*pos (\d+))?");
+    final _lineColumRe = new RegExp('line (\d+) pos (\d+)');
+
     await Process.start(Platform.executable, subArgs)
       .then((Process process) async {
+
         stdout.addStream(process.stdout);
-        stderr.addStream(process.stderr);
-        process.stdin.addStream(stdin);
+
+        var lineStream = process
+        .stderr
+        .transform(new Utf8Decoder())
+        .transform(new LineSplitter());
+
+        await for (var line in lineStream) {
+          final updated = line.replaceAllMapped(_packageFileRe,
+              (var match) {
+            var line = match[2];
+            var column = match[3];
+
+            _logger.info('Line is $line column is $column');
+
+            if(line == null) line = 1;
+            if(column == null) column = 1;
+
+            return "file://${packagesPath}/${match[1]}:$line:$column";
+          });
+          print(updated);
+        }
+
         await process.exitCode.then((int exitCode) {
           print('''
 ----------------------------------------------------------------------
