@@ -26,11 +26,12 @@ main(List<String> args) async {
     exit(-1);
   } else {
     print(args);
-    final dartArgs = args.sublist(0, i);
+    final dartPath = '/usr/lib/dart/lib';
     final dartProgram = args[i];
+    final dartArgs = args.sublist(0, i);
+    String packagesPath = join(dirname(dartProgram), 'packages');
     final programArgs = args.sublist(i+1);
 
-    String packagesPath = join(dirname(dartProgram), 'packages');
     bool packagesPathExist = FileSystemEntity.isDirectorySync(packagesPath);
 
     // See if folder containing dartFilePath has 'packages' folder.
@@ -49,7 +50,7 @@ main(List<String> args) async {
       }
     }
 
-    final subArgs = []
+    final subArgs = ['--checked']
       ..addAll(dartArgs)
       ..add(dartProgram)
       ..addAll(programArgs);
@@ -57,8 +58,7 @@ main(List<String> args) async {
     _logger.info('Running: '
         '${Platform.executable} ${dartArgs.join(" ")} ${subArgs.join(" ")}');
 
-    final _packageFileRe = new RegExp(r"'package:([^']+)':(?:.*line (\d+))?(?:.*pos (\d+))?");
-    final _lineColumRe = new RegExp('line (\d+) pos (\d+)');
+    var linesProcessed = 0;
 
     await Process.start(Platform.executable, subArgs)
       .then((Process process) async {
@@ -71,27 +71,57 @@ main(List<String> args) async {
         .transform(new LineSplitter());
 
         await for (var line in lineStream) {
-          final updated = line.replaceAllMapped(_packageFileRe,
-              (var match) {
-            var line = match[2];
-            var column = match[3];
-
-            _logger.info('Line is $line column is $column');
-
-            if(line == null) line = 1;
-            if(column == null) column = 1;
-
-            return "file://${packagesPath}/${match[1]}:$line:$column";
-          });
-          print(updated);
+          print(transformLine(line, packagesPath, dartPath));
+          linesProcessed++;
         }
 
         await process.exitCode.then((int exitCode) {
           print('''
 ----------------------------------------------------------------------
-Completed ($exitCode)
+Completed lines($linesProcessed) rc($exitCode)
 ''');
         });
       });
+  }
+}
+
+
+final _samples = [
+  '#0      Logger.level= (package:logging/logging.dart:96:24)',
+  "'file:///home/dbdavidson/tmp/abstract.dart': error: line 5 pos 1: unexpected token 'fdsafjlk'",
+  "#0      main (file:///home/dbdavidson/tmp/abstract.dart:7:3)"
+];
+
+final _stackDartLineRe = new RegExp(r'(.+\.dart):(\d+)(?::(\d+))?(.*)');
+final _compilerErrorLineRe = new RegExp(r"'(.+)': error: line (\d+) pos (\d+)");
+
+String transformLine(String originalLine, String packagesPath, String dartPath) {
+  try {
+    String updated = originalLine;
+    var match = _stackDartLineRe.firstMatch(originalLine);
+    if(match != null) {
+      var fname = match[1];
+      fname = fname.replaceAll('package:', 'file://$packagesPath/');
+      fname = fname.replaceAll('dart:', '$dartPath/');
+      fname = fname.replaceAll('(/', '(file://');
+      var line = match[2];
+      var column = match[3];
+      final trailing = match[4];
+      if(column==null) line = 1;
+      final pre = originalLine.substring(0, match.start);
+      updated = '$pre$fname:$line:$column$trailing';
+    } else if((match = _compilerErrorLineRe.firstMatch(originalLine)) != null) {
+      var fname = match[1];
+      var line = match[2];
+      var column = match[3];
+      final pre = originalLine.substring(0, match.start);
+      final post = originalLine.substring(match.end);
+      updated = '($pre$fname:$line:$column)$post';
+    }
+
+    return 'STDERR:$updated';
+  } catch(e) {
+    print('run_dart Caught: $e');
+    throw e;
   }
 }

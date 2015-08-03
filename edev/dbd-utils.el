@@ -153,7 +153,7 @@ File suffix is used to determine what program to run."
     (if (string-equal suffix "dart")
         (progn
           (message "Formatting dart code %s" fname)
-          (shell-command (concat "run_dart " dbd:home "bin/dart_format.dart -f " fname))
+          (shell-command (concat "dart " dbd:home "bin/dart_format.dart -f " fname))
           (revert-buffer t t)
           )
       (if (string-equal suffix "cpp")

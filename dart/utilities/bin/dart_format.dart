@@ -97,6 +97,13 @@ main(List<String> args) {
   sourceFile.copySync(backupFile);
   sourceFile.writeAsStringSync(formatted);
 
+  if(formatted != sourceText) {
+    print('Wrote: $sourceFile');
+  } else {
+    print('No format change: $sourceFile with guts\n$sourceText');
+  }
+
+
   // end <dartFormat main>
 
 }
