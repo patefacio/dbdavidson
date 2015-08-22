@@ -105,7 +105,7 @@ main(List<String> args) async {
         .map((p) => join(oss, p))
         .fold({}, (p, e) => p..[e] = cppPrune(e))));
     indices.add(new Index(idFromString('cb'), ['/usr/include/boost']));
-    indices.add(new Index(idFromString('cs'), ['/usr/include/c++/4.8/']));
+    //    indices.add(new Index(idFromString('cs'), ['/usr/include/c++/4.8/']));
 
     indices.add(new Index.withPruning(idFromString('cpp_ebisu'), {
       join(oss, 'cpp_ebisu'): new PruneSpec(
@@ -167,6 +167,7 @@ final dartMine = const [
   'ebisu',
   'ebisu_cpp',
   'ebisu_cpp_db',
+  'ebisu_capnp',
   'ebisu_dlang',
   'ebisu_web_ui',
   'id',

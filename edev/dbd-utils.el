@@ -309,3 +309,7 @@ File suffix is used to determine what program to run."
   (interactive)
   (select-frame (make-frame))
   (call-interactively 'gdb))
+
+(defun dbd:cppref ()
+  (interactive)
+  (shell-command "/usr/bin/assistant-qt4&"))
