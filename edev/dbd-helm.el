@@ -17,6 +17,7 @@
        ;; list actions using C-z
 
        (global-set-key "\C-x\C-b"	 'helm-buffers-list)
+       (global-set-key "\C-x\C-m"	 'helm-bookmarks)  
        (global-set-key "\C-x\C-f"        'helm-find-files)       
        
        (setq helm-split-window-in-side-p           t

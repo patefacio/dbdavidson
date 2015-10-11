@@ -2,6 +2,9 @@
 (defvar dbd:ebisu (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu/" ))
 (defvar dbd:ebisu-cpp (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu_cpp/" ))
 (defvar dbd:cpp-ebisu (concat (file-name-as-directory dbd:home) "dev/open_source/cpp_ebisu/" ))
+(defvar dbd:ebisu-capnp (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu_capnp/" ))
+(defvar dbd:plus (concat (file-name-as-directory dbd:home) "dev/open_source/plusauri/dart/plus" ))
+(defvar dbd:plus-infra (concat (file-name-as-directory dbd:home) "dev/open_source/plusauri/infra" ))
 
 (defun load-dart-project(dir)
   (interactive "DEnter path: ")
@@ -40,6 +43,18 @@
   (interactive)
   (load-dart-project dbd:ebisu))
 
+(defun dbd:plus-dev()
+  (interactive)
+  (load-dart-project dbd:plus))
+
+(defun dbd:plus-cpp-dev()
+  (interactive)
+  (load-dart-project dbd:plus-infra))
+
+(defun dbd:ebisu-capnp-dev()
+  (interactive)
+  (load-dart-project dbd:ebisu-capnp))
+
 (find-file
  (concat
   (file-name-as-directory dbd:home)
@@ -63,6 +78,9 @@
 (dbd:ebisu-cpp-dev)
 (dbd:cpp-ebisu-dev)
 (dbd:ebisu-dev)
+(dbd:ebisu-capnp-dev)
+(dbd:plus-dev)
+(dbd:plus-cpp-dev)
 
 (defun dbd:webstorm() (interactive)
        (shell-command

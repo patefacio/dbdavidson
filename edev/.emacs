@@ -110,3 +110,8 @@
 ;;; Following enables jump to written files from ebisu codeten
 (add-to-list 'compilation-error-regexp-alist
              '("\\(Wrote\\|Created\\):[ ]*\\(.*\\)" 2 nil nil))
+
+(setq custom-re "// custom <\\(.*\\)>\\(?:.*\\|\n\\)*// end <\\1>")
+
+(load-file "capnp-mode.el")
+(add-to-list 'auto-mode-alist '("\\.capnp\\'" . capnp-mode))
