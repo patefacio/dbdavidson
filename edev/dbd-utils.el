@@ -89,6 +89,7 @@ buffer is not visiting a file."
             ("cpp" . "run_cpp.dart -f")
             ("html" . "firefox")
             ("psql" . "psql -f")
+            ("capnp" . "capnp compile -ocapnp ")            
             )
           )
     (setq fname (buffer-file-name))
