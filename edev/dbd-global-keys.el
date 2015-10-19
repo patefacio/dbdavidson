@@ -28,7 +28,8 @@
   (global-set-key "\C-xp"               'other-window-backward)  
   (global-set-key "\M-g"                'goto-line)
   (global-set-key "\M-\e"               'eval-expression)
-  (global-set-key "\C-c\C-y"	        'yank-filepath-under-cursor)  
+  (global-set-key "\C-c\C-y"	        'yank-filepath-under-cursor)
+  (global-set-key "\C-z"                'comint-stop-subjob)
   
   (message "added global keys")
   )
