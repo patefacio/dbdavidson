@@ -85,7 +85,7 @@ buffer is not visiting a file."
 ;            ("d" . "rdmd")
             ("d" . "rd")
             ("dart" . "dart")
-            ("yaml" . "pub update")
+            ("yaml" . "pub upgrade")
             ("cpp" . "run_cpp.dart -f")
             ("html" . "firefox")
             ("psql" . "psql -f")

@@ -33,6 +33,7 @@
 
 
 (dbd:helm)
+(setq helm-buffer-max-length 40)
 
 (dbd:global-keys)
 (dbd:lang-keys)

@@ -120,7 +120,7 @@ class Locator {
   static final _boostIncludePath = '/usr/include/boost';
   static final _boostLibPath = '/usr/lib/x86_64-linux-gnu';
   static final _installPath = join(_home, 'install');
-  static final _ebisuIncludePath = join(_home, 'dev/open_source/fcs/cpp');
+  static final _ebisuIncludePath = join(_home, 'dev/open_source/cpp_ebisu/cpp');
   static final _catchIncludePath = join(_installPath, 'cpp/include/catch');
   static final _spdlogIncludePath = join(_installPath, 'cpp/include/');
   static final _cppFormatInclude = join(_installPath, 'cpp/include/cppformat');
@@ -171,10 +171,12 @@ class Builder {
     print('Includes $includes');
     final locator = new Locator(includes);
 
-    final cppFlags = ['--std=c++11']..addAll(locator.cppFlags);
+    final cppFlags = ['--std=c++11',
+      '-I/home/dbdavidson/dev/open_source/brigand',
+    ]..addAll(locator.cppFlags);
     final target = join(Locator._home, 'snippet');
     cppFlags.add(filename);
-    cppFlags.addAll(['-o', target]);
+    cppFlags.addAll(['-o', target, '-lpthread']);
 
     print('Compiling: clang++ ${cppFlags.join(" ")}');
 
