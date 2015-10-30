@@ -106,8 +106,6 @@
 
 ;;; (toggle-debug-on-error t)
 
-(load-file "dbd-current-projects.el")
-
 ;;; Following enables jump to written files from ebisu codeten
 (add-to-list 'compilation-error-regexp-alist
              '("\\(Wrote\\|Created\\):[ ]*\\(.*\\)" 2 nil nil))
@@ -116,3 +114,6 @@
 
 (load-file "capnp-mode.el")
 (add-to-list 'auto-mode-alist '("\\.capnp\\'" . capnp-mode))
+
+(load-file "dbd-current-projects.el")
+

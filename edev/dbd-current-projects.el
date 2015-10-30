@@ -11,10 +11,14 @@
   (dired dir)
   (rename-buffer (concat "DP(" (file-name-base (directory-file-name dir)) ")"))
   (dired-maybe-insert-subdir "codegen")
-  (dired-maybe-insert-subdir "lib")
-  (dired-maybe-insert-subdir "lib/src")
-  (find-file (concat (file-name-as-directory dir) "test/runner.dart"))
-  (find-file (concat (file-name-as-directory dir) "codegen/*.dart") t))
+  (if (file-exists-p "lib") (dired-maybe-insert-subdir "lib"))
+  (if (file-exists-p "lib/src") (dired-maybe-insert-subdir "lib/src"))
+  (let ((cgdir (concat (file-name-as-directory dir) "codegen")))
+    (if (directory-files cgdir nil "*.dart")
+        (find-file (concat (file-name-as-directory cgdir) "*.dart") t)))
+  (let ((runner (concat (file-name-as-directory dir) "test/runner.dart")))
+    (if (file-exists-p runner) (find-file runner))))
+  
 
 (defun load-cpp-project(dir namespace)
   (interactive "DEnter path:\nnamespace: ")
