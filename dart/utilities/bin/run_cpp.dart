@@ -136,6 +136,12 @@ class Locator {
       requiredLibs.add('boost_regex');
       requiredLibs.add('boost_system');
     }
+    if (includes.any((i) => i.contains('dbclient.h'))) {
+      requiredLibs.add('mongoclient');
+      _addBoost();
+      requiredLibs.add('libboost_system.so.1.55.0');
+      libPaths.add('/usr/lib');
+    }
     if (includes.any((i) => i.contains('ebisu'))) {
       includePaths.add(_ebisuIncludePath);
     }
@@ -177,6 +183,7 @@ class Builder {
     final target = join(Locator._home, 'snippet');
     cppFlags.add(filename);
     cppFlags.addAll(['-o', target, '-lpthread']);
+    cppFlags.addAll(locator.libPaths.map((l) => '-L$l'));
 
     print('Compiling: clang++ ${cppFlags.join(" ")}');
 

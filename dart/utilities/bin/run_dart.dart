@@ -10,18 +10,18 @@ import 'package:quiver/iterables.dart';
 final _logger = new Logger('runDart');
 
 main(List<String> args) async {
-  Logger.root.onRecord.listen((LogRecord r) =>
-      print("${r.loggerName} [${r.level}]:\t${r.message}"));
+  Logger.root.onRecord.listen(
+      (LogRecord r) => print("${r.loggerName} [${r.level}]:\t${r.message}"));
   Logger.root.level = Level.INFO;
 
   /// iterate over args and find first arg that is a file:
-  int i=0;
-  for(; i<args.length; i++) {
+  int i = 0;
+  for (; i < args.length; i++) {
     final arg = args[i];
-    if(!arg.startsWith('-') && FileSystemEntity.isFileSync(arg)) break;
+    if (!arg.startsWith('-') && FileSystemEntity.isFileSync(arg)) break;
   }
 
-  if(i==args.length) {
+  if (i == args.length) {
     print('Error: run_dart.dart must specify a file to run: $args');
     exit(-1);
   } else {
@@ -29,24 +29,37 @@ main(List<String> args) async {
     final dartPath = '/usr/lib/dart/lib';
     final dartProgram = args[i];
     final dartArgs = args.sublist(0, i);
-    String packagesPath = join(dirname(dartProgram), 'packages');
-    final programArgs = args.sublist(i+1);
+    final programArgs = args.sublist(i + 1);
 
-    bool packagesPathExist = FileSystemEntity.isDirectorySync(packagesPath);
+    String findPackagesPath(p) {
+      final parent = dirname(p);
+      if (parent == '/') {
+        print('Checking on $parent => false');
+        return null;
+      } else {
+        final potential = join(parent, 'packages');
+        print('Checking on $parent => packages $potential');
+        return FileSystemEntity.isDirectorySync(potential)?
+          potential : findPackagesPath(dirname(parent));
+      }
+    }
 
-    // See if folder containing dartFilePath has 'packages' folder.
+    String packagesPath = findPackagesPath(dartProgram);
+    bool packagesPathExist = packagesPath == null;
+
+    // See if folder or parents containing dartFilePath has 'packages' folder.
     // If not and DEFAULT_DART_PACKAGES env var exists, pass that
     String defaultDartPackages = Platform.environment['DEFAULT_DART_PACKAGES'];
     _logger.info("Default Dart packages env var set ${defaultDartPackages}");
-    if(defaultDartPackages != null && !packagesPathExist) {
+    if (defaultDartPackages != null && !packagesPathExist) {
       _logger.info("Default Dart packages env var set ${defaultDartPackages}");
 
-      if(FileSystemEntity.isDirectorySync(defaultDartPackages)) {
+      if (FileSystemEntity.isDirectorySync(defaultDartPackages)) {
         _logger.info("Using Default Dart Packages");
         dartArgs.insert(0, '--package-root=${defaultDartPackages}');
         packagesPath = defaultDartPackages;
       } else {
-        _logger.info("Default Dart Packages Not Exist: ${packagesPath}");
+        _logger.info("Default Dart Packages Not Exist: ${defaultDartPackages}");
       }
     }
 
@@ -60,31 +73,29 @@ main(List<String> args) async {
 
     var linesProcessed = 0;
 
-    await Process.start(Platform.executable, subArgs)
-      .then((Process process) async {
+    await Process
+        .start(Platform.executable, subArgs)
+        .then((Process process) async {
+      stdout.addStream(process.stdout);
 
-        stdout.addStream(process.stdout);
+      var lineStream = process.stderr
+          .transform(new Utf8Decoder())
+          .transform(new LineSplitter());
 
-        var lineStream = process
-        .stderr
-        .transform(new Utf8Decoder())
-        .transform(new LineSplitter());
+      await for (var line in lineStream) {
+        print(transformLine(line, packagesPath, dartPath));
+        linesProcessed++;
+      }
 
-        await for (var line in lineStream) {
-          print(transformLine(line, packagesPath, dartPath));
-          linesProcessed++;
-        }
-
-        await process.exitCode.then((int exitCode) {
-          print('''
+      await process.exitCode.then((int exitCode) {
+        print('''
 ----------------------------------------------------------------------
 Completed lines($linesProcessed) rc($exitCode)
 ''');
-        });
       });
+    });
   }
 }
-
 
 final _samples = [
   '#0      Logger.level= (package:logging/logging.dart:96:24)',
@@ -95,11 +106,12 @@ final _samples = [
 final _stackDartLineRe = new RegExp(r'(.+\.dart):(\d+)(?::(\d+))?(.*)');
 final _compilerErrorLineRe = new RegExp(r"'(.+)': error: line (\d+) pos (\d+)");
 
-String transformLine(String originalLine, String packagesPath, String dartPath) {
+String transformLine(
+    String originalLine, String packagesPath, String dartPath) {
   try {
     String updated = originalLine;
     var match = _stackDartLineRe.firstMatch(originalLine);
-    if(match != null) {
+    if (match != null) {
       var fname = match[1];
       fname = fname.replaceAll('package:', 'file://$packagesPath/');
       fname = fname.replaceAll('dart:', '$dartPath/');
@@ -107,10 +119,11 @@ String transformLine(String originalLine, String packagesPath, String dartPath) 
       var line = match[2];
       var column = match[3];
       final trailing = match[4];
-      if(column==null) line = 1;
+      if (column == null) line = 1;
       final pre = originalLine.substring(0, match.start);
       updated = '$pre$fname:$line:$column$trailing';
-    } else if((match = _compilerErrorLineRe.firstMatch(originalLine)) != null) {
+    } else if ((match = _compilerErrorLineRe.firstMatch(originalLine)) !=
+        null) {
       var fname = match[1];
       var line = match[2];
       var column = match[3];
@@ -120,7 +133,7 @@ String transformLine(String originalLine, String packagesPath, String dartPath) 
     }
 
     return 'STDERR:$updated';
-  } catch(e) {
+  } catch (e) {
     print('run_dart Caught: $e');
     throw e;
   }

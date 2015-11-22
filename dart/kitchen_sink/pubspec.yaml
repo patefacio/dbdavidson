@@ -12,6 +12,7 @@ dependencies:
     git: git://github.com/patefacio/json_schema
   simple_schema:
     git: git://github.com/patefacio/simple_schema
+
   unittest: ">=0.11.0"
 
   xml: "^2.2.3"
@@ -35,6 +36,10 @@ dependency_overrides:
 #    git: git://github.com/patefacio/ebisu
     path: /home/dbdavidson/dev/open_source/ebisu
 
+  magus:
+    path: /home/dbdavidson/dev/open_source/magus
+    #git: git://github.com/patefacio/magus
+    
   ebisu_web_ui:
     git: git://github.com/patefacio/ebisu_web_ui
 #    path: /home/dbdavidson/dev/open_source/ebisu_web_ui
@@ -50,7 +55,7 @@ dependency_overrides:
   json_schema:
     git: git://github.com/patefacio/json_schema
 
-  dart_style: "^0.1.6"
+  dart_style: "^0.2.0"
 #    path: /home/dbdavidson/dev/open_source/dart_style
 #    git: git://github.com/dart-lang/dart_style
 

@@ -104,8 +104,12 @@ main(List<String> args) async {
     indices.add(new Index.withPruning(idFromString('cm'), cppMine
         .map((p) => join(oss, p))
         .fold({}, (p, e) => p..[e] = cppPrune(e))));
+
     indices.add(new Index(idFromString('cb'), ['/usr/include/boost']));
-    //    indices.add(new Index(idFromString('cs'), ['/usr/include/c++/4.8/']));
+
+    indices.add(new Index(idFromString('tbb'), [
+      '/home/dbdavidson/dev/open_source/tbb44_20150728oss'
+    ]));
 
     indices.add(new Index.withPruning(idFromString('cpp_ebisu'), {
       join(oss, 'cpp_ebisu'): new PruneSpec(

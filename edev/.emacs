@@ -116,4 +116,4 @@
 (add-to-list 'auto-mode-alist '("\\.capnp\\'" . capnp-mode))
 
 (load-file "dbd-current-projects.el")
-
+(load-file "dbd-humor.el")
