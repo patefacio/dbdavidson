@@ -34,23 +34,21 @@ main(List<String> args) async {
     String findPackagesPath(p) {
       final parent = dirname(p);
       if (parent == '/') {
-        print('Checking on $parent => false');
         return null;
       } else {
         final potential = join(parent, 'packages');
-        print('Checking on $parent => packages $potential');
-        return FileSystemEntity.isDirectorySync(potential)?
-          potential : findPackagesPath(dirname(parent));
+        final foundPackages = FileSystemEntity.isDirectorySync(potential);
+        return foundPackages? potential : findPackagesPath(parent);
       }
     }
 
     String packagesPath = findPackagesPath(dartProgram);
-    bool packagesPathExist = packagesPath == null;
+    bool packagesPathExist = packagesPath != null;
 
     // See if folder or parents containing dartFilePath has 'packages' folder.
     // If not and DEFAULT_DART_PACKAGES env var exists, pass that
     String defaultDartPackages = Platform.environment['DEFAULT_DART_PACKAGES'];
-    _logger.info("Default Dart packages env var set ${defaultDartPackages}");
+    _logger.info("Default Dart ${defaultDartPackages} and exists $packagesPathExist");
     if (defaultDartPackages != null && !packagesPathExist) {
       _logger.info("Default Dart packages env var set ${defaultDartPackages}");
 
