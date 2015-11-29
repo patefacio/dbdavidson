@@ -13,6 +13,8 @@ dependencies:
   simple_schema:
     git: git://github.com/patefacio/simple_schema
 
+  crypto: "^0.9.1"    
+
   unittest: ">=0.11.0"
 
   xml: "^2.2.3"

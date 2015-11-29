@@ -12,7 +12,7 @@ final _logger = new Logger('runDart');
 main(List<String> args) async {
   Logger.root.onRecord.listen(
       (LogRecord r) => print("${r.loggerName} [${r.level}]:\t${r.message}"));
-  Logger.root.level = Level.INFO;
+  Logger.root.level = Level.WARNING;
 
   /// iterate over args and find first arg that is a file:
   int i = 0;

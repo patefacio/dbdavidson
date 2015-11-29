@@ -1,4 +1,5 @@
 #!/usr/bin/env dart
+
 /// Place to flesh out my searching need
 import 'dart:async';
 import 'dart:io';
@@ -17,6 +18,7 @@ Place to flesh out my searching need
 ''');
   print(_parser.getUsage());
 }
+
 //! Method to parse command line options.
 //! The result is a map containing all options, including positional options
 Map _parseArgs(List<String> args) {
@@ -27,16 +29,24 @@ Map _parseArgs(List<String> args) {
   _parser = new ArgParser();
   try {
     /// Fill in expectations of the parser
-    _parser.addFlag('help', help: r'''
+    _parser.addFlag('help',
+        help: r'''
 Display this help screen
-''', abbr: 'h', defaultsTo: false);
+''',
+        abbr: 'h',
+        defaultsTo: false);
 
-    _parser.addOption('log-level', help: r'''
+    _parser.addOption('log-level',
+        help: r'''
 Select log level from:
 [ all, config, fine, finer, finest, info, levels,
   off, severe, shout, warning ]
 
-''', defaultsTo: null, allowMultiple: false, abbr: null, allowed: null);
+''',
+        defaultsTo: null,
+        allowMultiple: false,
+        abbr: null,
+        allowed: null);
 
     /// Parse the command line options (excluding the script)
     argResults = _parser.parse(args);
@@ -71,6 +81,7 @@ Select log level from:
     throw e;
   }
 }
+
 final _logger = new Logger('myXgrep');
 main(List<String> args) async {
   Logger.root.onRecord.listen(
@@ -92,37 +103,42 @@ main(List<String> args) async {
 
     dartPrune(p) =>
         new PruneSpec(['.pub'], [join(p, '.git'), join(p, 'cache')]);
-    indices.add(new Index.withPruning(idFromString('dm'), dartMine
-        .map((p) => join(oss, p))
-        .fold({}, (p, e) => p..[e] = dartPrune(e))));
+    indices.add(new Index.withPruning(
+        idFromString('dm'),
+        dartMine
+            .map((p) => join(oss, p))
+            .fold({}, (p, e) => p..[e] = dartPrune(e))));
 
     indices.add(new Index.withPruning(idFromString('ds'), {
       '/usr/lib/dart/lib': new PruneSpec(['core_stubs'], [])
     }));
 
     cppPrune(p) => new PruneSpec([], [join(p, '.git')]);
-    indices.add(new Index.withPruning(idFromString('cm'), cppMine
-        .map((p) => join(oss, p))
-        .fold({}, (p, e) => p..[e] = cppPrune(e))));
+    indices.add(new Index.withPruning(
+        idFromString('cm'),
+        cppMine
+            .map((p) => join(oss, p))
+            .fold({}, (p, e) => p..[e] = cppPrune(e))));
 
     indices.add(new Index(idFromString('cb'), ['/usr/include/boost']));
 
-    indices.add(new Index(idFromString('tbb'), [
-      '/home/dbdavidson/dev/open_source/tbb44_20150728oss'
-    ]));
+    indices.add(new Index(idFromString('tbb'),
+        ['/home/dbdavidson/dev/open_source/tbb44_20150728oss']));
 
     indices.add(new Index.withPruning(idFromString('cpp_ebisu'), {
-      join(oss, 'cpp_ebisu'): new PruneSpec(
-          [], [join(oss, 'cpp_ebisu', 'cmake_build'), join(oss, 'cpp_ebisu', 'doc'),])
+      join(oss, 'cpp_ebisu'): new PruneSpec([], [
+        join(oss, 'cpp_ebisu', '.git'),
+        join(oss, 'cpp_ebisu', 'build_dir'),
+        join(oss, 'cpp_ebisu', 'cmake_build'),
+        join(oss, 'cpp_ebisu', 'doc'),
+      ])
     }));
 
-    indices.add(new Index.withPruning(idFromString('hist'), {
-      join(oss, 'codegen'): gitPrune(join(oss, 'codegen'))
-    }));
+    indices.add(new Index.withPruning(idFromString('hist'),
+        {join(oss, 'codegen'): gitPrune(join(oss, 'codegen'))}));
 
-    indices.add(new Index.withPruning(idFromString('thrift'), {
-      join(oss, 'thrift'): gitPrune(join(oss, 'codegen'))
-    }));
+    indices.add(new Index.withPruning(idFromString('thrift'),
+        {join(oss, 'thrift'): gitPrune(join(oss, 'codegen'))}));
 
     indices.add(new Index(idFromString('org'), [join(home, 'orgfiles')]));
 
@@ -145,11 +161,8 @@ main(List<String> args) async {
 
     filters.add(new Filter(idFromString('xjs'), false, [r'\.js$']));
 
-    filters.add(new Filter(idFromString('ignore'), false, [
-      r'~$',
-      r'/pubspec.lock',
-      r'/.gitignore\b'
-    ]));
+    filters.add(new Filter(idFromString('ignore'), false,
+        [r'~$', r'/pubspec.lock', r'/.gitignore\b']));
 
     filters.add(new Filter(
         idFromString('rb'), true, [r'\.rb$', r'\.spec$', r'\.gemspec']));
@@ -162,7 +175,6 @@ main(List<String> args) async {
   }).catchError((e) => print('Caught Error $e'));
 
   // end <myXgrep main>
-
 }
 
 // custom <myXgrep global>
