@@ -9,6 +9,8 @@ import 'package:logging/logging.dart';
 import 'package:path/path.dart';
 import 'package:xgrep/xgrep.dart';
 
+// custom <additional imports>
+// end <additional imports>
 //! The parser for this script
 ArgParser _parser;
 //! The comment and usage associated with this script

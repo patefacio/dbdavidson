@@ -1,10 +1,13 @@
 #!/usr/bin/env dart
+
 /// Backup and then format dart code
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:ebisu/ebisu.dart';
 import 'package:logging/logging.dart';
 
+// custom <additional imports>
+// end <additional imports>
 //! The parser for this script
 ArgParser _parser;
 //! The comment and usage associated with this script
@@ -14,6 +17,7 @@ Backup and then format dart code
 ''');
   print(_parser.getUsage());
 }
+
 //! Method to parse command line options.
 //! The result is a map containing all options, including positional options
 Map _parseArgs(List<String> args) {
@@ -24,19 +28,32 @@ Map _parseArgs(List<String> args) {
   _parser = new ArgParser();
   try {
     /// Fill in expectations of the parser
-    _parser.addFlag('help', help: r'''
+    _parser.addFlag('help',
+        help: r'''
 Display this help screen
-''', abbr: 'h', defaultsTo: false);
+''',
+        abbr: 'h',
+        defaultsTo: false);
 
-    _parser.addOption('filename', help: r'''
+    _parser.addOption('filename',
+        help: r'''
 File to format
-''', defaultsTo: null, allowMultiple: false, abbr: 'f', allowed: null);
-    _parser.addOption('log-level', help: r'''
+''',
+        defaultsTo: null,
+        allowMultiple: false,
+        abbr: 'f',
+        allowed: null);
+    _parser.addOption('log-level',
+        help: r'''
 Select log level from:
 [ all, config, fine, finer, finest, info, levels,
   off, severe, shout, warning ]
 
-''', defaultsTo: null, allowMultiple: false, abbr: null, allowed: null);
+''',
+        defaultsTo: null,
+        allowMultiple: false,
+        abbr: null,
+        allowed: null);
 
     /// Parse the command line options (excluding the script)
     argResults = _parser.parse(args);
@@ -72,6 +89,7 @@ Select log level from:
     throw e;
   }
 }
+
 final _logger = new Logger('dartFormat');
 main(List<String> args) {
   Logger.root.onRecord.listen(
@@ -86,6 +104,7 @@ main(List<String> args) {
   } on ArgumentError catch (e) {
     print(e);
     _usage();
+    exit(-1);
   }
   // custom <dartFormat main>
 
@@ -97,15 +116,13 @@ main(List<String> args) {
   sourceFile.copySync(backupFile);
   sourceFile.writeAsStringSync(formatted);
 
-  if(formatted != sourceText) {
+  if (formatted != sourceText) {
     print('Wrote: $sourceFile');
   } else {
     print('No format change: $sourceFile with guts\n$sourceText');
   }
 
-
   // end <dartFormat main>
-
 }
 
 // custom <dartFormat global>

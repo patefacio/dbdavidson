@@ -1,4 +1,5 @@
 #!/usr/bin/env dart
+
 /// Compile the specified C++ file and run it
 import 'dart:io';
 import 'package:args/args.dart';
@@ -7,6 +8,8 @@ import 'package:logging/logging.dart';
 import 'package:path/path.dart';
 import 'package:quiver/iterables.dart';
 
+// custom <additional imports>
+// end <additional imports>
 //! The parser for this script
 ArgParser _parser;
 //! The comment and usage associated with this script
@@ -16,6 +19,7 @@ Compile the specified C++ file and run it
 ''');
   print(_parser.getUsage());
 }
+
 //! Method to parse command line options.
 //! The result is a map containing all options, including positional options
 Map _parseArgs(List<String> args) {
@@ -26,25 +30,48 @@ Map _parseArgs(List<String> args) {
   _parser = new ArgParser();
   try {
     /// Fill in expectations of the parser
-    _parser.addFlag('help', help: r'''
+    _parser.addFlag('help',
+        help: r'''
 Display this help screen
-''', abbr: 'h', defaultsTo: false);
+''',
+        abbr: 'h',
+        defaultsTo: false);
 
-    _parser.addOption('filename', help: r'''
+    _parser.addOption('filename',
+        help: r'''
 The file to compile and run
-''', defaultsTo: null, allowMultiple: false, abbr: 'f', allowed: null);
-    _parser.addOption('compile-arg', help: r'''
+''',
+        defaultsTo: null,
+        allowMultiple: false,
+        abbr: 'f',
+        allowed: null);
+    _parser.addOption('compile-arg',
+        help: r'''
 Arg passed to compiler
-''', defaultsTo: null, allowMultiple: true, abbr: 'c', allowed: null);
-    _parser.addOption('link-arg', help: r'''
+''',
+        defaultsTo: null,
+        allowMultiple: true,
+        abbr: 'c',
+        allowed: null);
+    _parser.addOption('link-arg',
+        help: r'''
 Arg passed to linker
-''', defaultsTo: null, allowMultiple: true, abbr: 'l', allowed: null);
-    _parser.addOption('log-level', help: r'''
+''',
+        defaultsTo: null,
+        allowMultiple: true,
+        abbr: 'l',
+        allowed: null);
+    _parser.addOption('log-level',
+        help: r'''
 Select log level from:
 [ all, config, fine, finer, finest, info, levels,
   off, severe, shout, warning ]
 
-''', defaultsTo: null, allowMultiple: false, abbr: null, allowed: null);
+''',
+        defaultsTo: null,
+        allowMultiple: false,
+        abbr: null,
+        allowed: null);
 
     /// Parse the command line options (excluding the script)
     argResults = _parser.parse(args);
@@ -82,9 +109,12 @@ Select log level from:
     throw e;
   }
 }
+
 final _logger = new Logger('runCpp');
+
 /// Some commonly used libs to pull in if necessary
 enum CommonLib { boostRegex, boostFilesystem, boostSystem }
+
 /// Convenient access to CommonLib.boostRegex with *boostRegex* see [CommonLib].
 ///
 const CommonLib boostRegex = CommonLib.boostRegex;
@@ -99,6 +129,7 @@ const CommonLib boostSystem = CommonLib.boostSystem;
 
 /// Some commonly used packages to pull in if necessary
 enum CommonInclude { boost, catchTest }
+
 /// Convenient access to CommonInclude.boost with *boost* see [CommonInclude].
 ///
 const CommonInclude boost = CommonInclude.boost;
@@ -106,6 +137,7 @@ const CommonInclude boost = CommonInclude.boost;
 /// Convenient access to CommonInclude.catchTest with *catchTest* see [CommonInclude].
 ///
 const CommonInclude catchTest = CommonInclude.catchTest;
+
 /// Tries to find any required libs/headers
 class Locator {
   List<String> includes = [];
@@ -162,9 +194,9 @@ class Locator {
 
 /// Tries to build the file
 class Builder {
-
   /// File to compile
   String filename;
+
   /// Files included by filename
   List<String> includes = [];
 
@@ -177,7 +209,8 @@ class Builder {
     print('Includes $includes');
     final locator = new Locator(includes);
 
-    final cppFlags = ['--std=c++11',
+    final cppFlags = [
+      '--std=c++11',
       '-I/home/dbdavidson/dev/open_source/brigand',
     ]..addAll(locator.cppFlags);
     final target = join(Locator._home, 'snippet');
@@ -195,17 +228,18 @@ class Builder {
         exit(results.exitCode);
       }
     }).then((_) => Process.run(target, []).then((ProcessResult results) {
-      print(
-          '----------------------------------------------------------------------');
-      print(results.stdout);
-      print(results.stderr);
-      exit(results.exitCode);
-    }));
+          print(
+              '----------------------------------------------------------------------');
+          print(results.stdout);
+          print(results.stderr);
+          exit(results.exitCode);
+        }));
   }
 
   // end <class Builder>
 
 }
+
 main(List<String> args) {
   Logger.root.onRecord.listen(
       (LogRecord r) => print("${r.loggerName} [${r.level}]:\t${r.message}"));
@@ -219,6 +253,7 @@ main(List<String> args) {
   } on ArgumentError catch (e) {
     print(e);
     _usage();
+    exit(-1);
   }
   // custom <runCpp main>
   print('Compiling $options');
@@ -226,7 +261,6 @@ main(List<String> args) {
   final builder = new Builder(options['filename']);
 
   // end <runCpp main>
-
 }
 
 // custom <runCpp global>
