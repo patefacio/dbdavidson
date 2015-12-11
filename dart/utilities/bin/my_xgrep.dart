@@ -183,6 +183,10 @@ final dartMine = const [
   'ebisu',
   'ebisu_cpp',
   'ebisu_cpp_db',
+  'ebisu_pod',
+  'ebisu_mongo',
+  'ebisu_msgpack',
+  'ebisu_ang',
   'ebisu_capnp',
   'ebisu_dlang',
   'ebisu_web_ui',
@@ -190,7 +194,6 @@ final dartMine = const [
   'json_schema',
   'magus',
   'xgrep',
-  'plusauri',
   'simple_schema',
 ];
 
