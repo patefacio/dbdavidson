@@ -184,7 +184,6 @@ main(List<String> args) {
       excludeJs = !options['js'];
       excludeDart = !options['dart'];
     }
-    print('excludejs $excludeJs excludeDart $excludeDart');
     allFiles
         .where((f) => !excludeJs || !f.endsWith('.js'))
         .where((f) => !excludeDart || !f.endsWith('.dart'))
