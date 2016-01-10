@@ -168,6 +168,14 @@ class Locator {
       requiredLibs.add('boost_regex');
       requiredLibs.add('boost_system');
     }
+    if(includes.any((i) => i.contains('boost/date_time'))) {
+      requiredLibs.add('boost_date_time');
+      requiredLibs.add('boost_system');
+    }
+
+    if(includes.any((i) => i.contains('msgpack.hpp'))) {
+      requiredLibs.add('msgpack');
+    }
     if (includes.any((i) => i.contains('dbclient.h'))) {
       requiredLibs.add('mongoclient');
       _addBoost();

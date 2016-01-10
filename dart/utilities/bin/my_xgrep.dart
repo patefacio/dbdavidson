@@ -139,6 +139,12 @@ main(List<String> args) async {
     indices.add(new Index.withPruning(idFromString('hist'),
         {join(oss, 'codegen'): gitPrune(join(oss, 'codegen'))}));
 
+    indices.add(new Index(idFromString('ang2_src'),
+            [join(oss, 'angular')]));
+
+    indices.add(new Index(idFromString('ang2'),
+            [join(oss, 'angular2_dart/packages/angular2')]));
+
     indices.add(new Index.withPruning(idFromString('thrift'),
         {join(oss, 'thrift'): gitPrune(join(oss, 'codegen'))}));
 

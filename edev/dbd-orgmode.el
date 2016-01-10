@@ -48,6 +48,7 @@
     ("javascript" . ?j)
     ("django" . ?J)
     ("dlang" . ?D)
+    ("ebisu_pod" . ?p)
     ("sqlalchemy" . ?A)
     ("pyramid" . ?P)
     ("go" . ?g)

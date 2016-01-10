@@ -106,6 +106,7 @@ main() {
           'async',
           'io',
         ],
+
       script('header_deps')
         ..doc = '''
 In comes output from compiles with -H, out comes a dot file
