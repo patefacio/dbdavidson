@@ -47,6 +47,14 @@ Grep a dart package with awareness for imported packages versus local code.
         ..doc = 'If true looks in packages only'
         ..isFlag = true,
 
+        scriptArg('dart')
+        ..doc = 'If true includes dart'
+        ..isFlag = true,
+
+        scriptArg('js')
+        ..doc = 'If true includes js'
+        ..isFlag = true,
+
       ],
 
       script('dart_format')

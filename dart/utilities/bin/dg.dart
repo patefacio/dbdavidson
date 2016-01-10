@@ -10,7 +10,6 @@ import 'package:ebisu/ebisu.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart';
 import 'package:quiver/iterables.dart';
-
 // custom <additional imports>
 
 import 'dart:convert';
@@ -51,6 +50,18 @@ If true looks in packages only
 ''',
         abbr: null,
         defaultsTo: false);
+    _parser.addFlag('dart',
+        help: r'''
+If true includes dart
+''',
+        abbr: null,
+        defaultsTo: false);
+    _parser.addFlag('js',
+        help: r'''
+If true includes js
+''',
+        abbr: null,
+        defaultsTo: false);
     _parser.addFlag('help',
         help: r'''
 Display this help screen
@@ -87,6 +98,8 @@ Select log level from:
     result['project-path'] = argResults['project-path'];
     result['exclude-packages'] = argResults['exclude-packages'];
     result['exclude-local'] = argResults['exclude-local'];
+    result['dart'] = argResults['dart'];
+    result['js'] = argResults['js'];
     result['help'] = argResults['help'];
     result['log-level'] = argResults['log-level'];
 
@@ -147,27 +160,38 @@ main(List<String> args) {
 
   final packagesPath = new Directory(join(projectPath, 'packages'));
   final allFiles = concat([
-    options['exclude-packages']? [] : files(packagesPath),
-    options['exclude-local']? [] : files(new Directory(projectPath))
+    options['exclude-packages'] ? [] : files(packagesPath),
+    options['exclude-local'] ? [] : files(new Directory(projectPath))
   ]);
 
-  final commandArgs = concat([['grep', '-s', '-n', '-E'], positionals]).toList();
+  final commandArgs = concat([
+    ['grep', '-s', '-n', '-E'],
+    positionals
+  ]).toList();
 
-  Process
-    .start('xargs', commandArgs)
-      .then((Process process) {
-        stderr.addStream(process.stderr);
-        process.stdout
+  Process.start('xargs', commandArgs).then((Process process) {
+    stderr.addStream(process.stderr);
+    process.stdout
         .transform(new Utf8Decoder())
         .transform(new LineSplitter())
         .listen((String line) {
-          print(line);
-        });
+      print(line);
+    });
 
-        allFiles.forEach((f) => process.stdin.write('$f\n'));
-        process.stdin.close();
-        process.exitCode.then((var exitCode) => null);
-      });
+    bool excludeJs, excludeDart;
+
+    if(options['js'] || options['dart']) {
+      excludeJs = !options['js'];
+      excludeDart = !options['dart'];
+    }
+    print('excludejs $excludeJs excludeDart $excludeDart');
+    allFiles
+        .where((f) => !excludeJs || !f.endsWith('.js'))
+        .where((f) => !excludeDart || !f.endsWith('.dart'))
+        .forEach((f) => process.stdin.write('$f\n'));
+    process.stdin.close();
+    process.exitCode.then((var exitCode) => null);
+  });
 
   // end <dg main>
 }
