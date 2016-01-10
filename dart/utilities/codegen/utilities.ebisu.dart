@@ -20,6 +20,35 @@ main() {
         pubdep('ebisu')..path = ebisuPath
       ])
     ..scripts = [
+
+      script('dg')
+      ..doc = '''
+Dart grep.
+
+Grep a dart package with awareness for imported packages versus local code.
+'''
+      ..imports = [
+        'io',
+        'package:ebisu/ebisu.dart',
+        'package:path/path.dart',
+        'package:quiver/iterables.dart',
+      ]
+      ..args = [
+
+        scriptArg('project_path')
+        ..doc = 'Path to dart project, if not set looks from current path'
+        ..abbr = 'p',
+
+        scriptArg('exclude_packages')
+        ..doc = 'If true does not look in packages'
+        ..isFlag = true,
+
+        scriptArg('exclude_local')
+        ..doc = 'If true looks in packages only'
+        ..isFlag = true,
+
+      ],
+
       script('dart_format')
         ..doc = 'Backup and then format dart code'
         ..imports = ['io', 'package:ebisu/ebisu.dart',]

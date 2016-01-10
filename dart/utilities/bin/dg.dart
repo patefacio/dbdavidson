@@ -1,19 +1,30 @@
 #!/usr/bin/env dart
 
-/// Backup and then format dart code
+/// Dart grep.
+///
+/// Grep a dart package with awareness for imported packages versus local code.
+///
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:ebisu/ebisu.dart';
 import 'package:logging/logging.dart';
+import 'package:path/path.dart';
+import 'package:quiver/iterables.dart';
 
 // custom <additional imports>
+
+import 'dart:convert';
+
 // end <additional imports>
 //! The parser for this script
 ArgParser _parser;
 //! The comment and usage associated with this script
 void _usage() {
   print(r'''
-Backup and then format dart code
+Dart grep.
+
+Grep a dart package with awareness for imported packages versus local code.
+
 ''');
   print(_parser.getUsage());
 }
@@ -28,6 +39,18 @@ Map _parseArgs(List<String> args) {
   _parser = new ArgParser();
   try {
     /// Fill in expectations of the parser
+    _parser.addFlag('exclude-packages',
+        help: r'''
+If true does not look in packages
+''',
+        abbr: null,
+        defaultsTo: false);
+    _parser.addFlag('exclude-local',
+        help: r'''
+If true looks in packages only
+''',
+        abbr: null,
+        defaultsTo: false);
     _parser.addFlag('help',
         help: r'''
 Display this help screen
@@ -35,13 +58,13 @@ Display this help screen
         abbr: 'h',
         defaultsTo: false);
 
-    _parser.addOption('filename',
+    _parser.addOption('project-path',
         help: r'''
-File to format
+Path to dart project, if not set looks from current path
 ''',
         defaultsTo: null,
         allowMultiple: false,
-        abbr: 'f',
+        abbr: 'p',
         allowed: null);
     _parser.addOption('log-level',
         help: r'''
@@ -61,7 +84,9 @@ Select log level from:
       _usage();
       exit(0);
     }
-    result['filename'] = argResults['filename'];
+    result['project-path'] = argResults['project-path'];
+    result['exclude-packages'] = argResults['exclude-packages'];
+    result['exclude-local'] = argResults['exclude-local'];
     result['help'] = argResults['help'];
     result['log-level'] = argResults['log-level'];
 
@@ -90,7 +115,7 @@ Select log level from:
   }
 }
 
-final _logger = new Logger('dartFormat');
+final _logger = new Logger('dg');
 
 main(List<String> args) {
   Logger.root.onRecord.listen(
@@ -99,32 +124,53 @@ main(List<String> args) {
   Map argResults = _parseArgs(args);
   Map options = argResults['options'];
   List positionals = argResults['rest'];
-  try {
-    if (options["filename"] == null)
-      throw new ArgumentError("option: filename is required");
-  } on ArgumentError catch (e) {
-    print(e);
-    _usage();
-    exit(-1);
-  }
-  // custom <dartFormat main>
+  // custom <dg main>
 
-  final sourceFile = new File(options['filename']);
-  final backupFile = options['filename'] + '~';
-  final sourceText = sourceFile.readAsStringSync();
-  final formatted = dartFormat(sourceText);
+  _projectPath(p) => p == '/'
+      ? null
+      : (new File(join(p, 'pubspec.yaml')).existsSync() &&
+              new Directory(join(p, 'packages')).existsSync())
+          ? p
+          : _projectPath(dirname(p));
 
-  sourceFile.copySync(backupFile);
-  sourceFile.writeAsStringSync(formatted);
+  final projectPath =
+      _projectPath(options['project-path'] ?? Directory.current.path);
 
-  if (formatted != sourceText) {
-    print('Wrote: $sourceFile');
-  } else {
-    print('No format change: $sourceFile with guts\n$sourceText');
-  }
+  if (projectPath == null) throw 'not a valid project';
 
-  // end <dartFormat main>
+  files(p) => p is File
+      ? [p.path]
+      : (concat(p.listSync().where((p) {
+          final bname = basename(p.path);
+          return bname != 'packages' && !bname.startsWith('.');
+        }).map(files)));
+
+  final packagesPath = new Directory(join(projectPath, 'packages'));
+  final allFiles = concat([
+    options['exclude-packages']? [] : files(packagesPath),
+    options['exclude-local']? [] : files(new Directory(projectPath))
+  ]);
+
+  final commandArgs = concat([['grep', '-s', '-n', '-E'], positionals]).toList();
+
+  Process
+    .start('xargs', commandArgs)
+      .then((Process process) {
+        stderr.addStream(process.stderr);
+        process.stdout
+        .transform(new Utf8Decoder())
+        .transform(new LineSplitter())
+        .listen((String line) {
+          print(line);
+        });
+
+        allFiles.forEach((f) => process.stdin.write('$f\n'));
+        process.stdin.close();
+        process.exitCode.then((var exitCode) => null);
+      });
+
+  // end <dg main>
 }
 
-// custom <dartFormat global>
-// end <dartFormat global>
+// custom <dg global>
+// end <dg global>

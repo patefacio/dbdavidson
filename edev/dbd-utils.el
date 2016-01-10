@@ -89,7 +89,7 @@ buffer is not visiting a file."
             ("cpp" . "run_cpp.dart -f")
             ("html" . "firefox")
             ("psql" . "psql -f")
-            ("capnp" . "capnp compile -ocapnp ")            
+            ("capnp" . "capnp compile -ocapnp ")
             )
           )
     (setq fname (buffer-file-name))
@@ -314,3 +314,8 @@ File suffix is used to determine what program to run."
 (defun dbd:cppref ()
   (interactive)
   (shell-command "/usr/bin/assistant-qt4&"))
+
+(defun dg(args)
+  "Search dart project"
+  (interactive "sEnter args:")
+  (grep (concat "dg --project-path " (buffer-file-name) " "  args)))

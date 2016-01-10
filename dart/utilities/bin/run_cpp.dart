@@ -168,12 +168,12 @@ class Locator {
       requiredLibs.add('boost_regex');
       requiredLibs.add('boost_system');
     }
-    if(includes.any((i) => i.contains('boost/date_time'))) {
+    if (includes.any((i) => i.contains('boost/date_time'))) {
       requiredLibs.add('boost_date_time');
       requiredLibs.add('boost_system');
     }
 
-    if(includes.any((i) => i.contains('msgpack.hpp'))) {
+    if (includes.any((i) => i.contains('msgpack.hpp'))) {
       requiredLibs.add('msgpack');
     }
     if (includes.any((i) => i.contains('dbclient.h'))) {
@@ -256,8 +256,8 @@ main(List<String> args) {
   Map options = argResults['options'];
   List positionals = argResults['rest'];
   try {
-    if (options["filename"] ==
-        null) throw new ArgumentError("option: filename is required");
+    if (options["filename"] == null)
+      throw new ArgumentError("option: filename is required");
   } on ArgumentError catch (e) {
     print(e);
     _usage();
