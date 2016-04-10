@@ -1,5 +1,7 @@
 
 (defvar dbd:ebisu (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu/" ))
+(defvar dbd:ebisu-ang (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu_ang/" ))
+(defvar dbd:ebisu-pod (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu_pod/" ))
 (defvar dbd:ebisu-cpp (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu_cpp/" ))
 (defvar dbd:cpp-ebisu (concat (file-name-as-directory dbd:home) "dev/open_source/cpp_ebisu/" ))
 (defvar dbd:ebisu-capnp (concat (file-name-as-directory dbd:home) "dev/open_source/ebisu_capnp/" ))
@@ -47,6 +49,14 @@
   (interactive)
   (load-dart-project dbd:ebisu))
 
+(defun dbd:ebisu-ang-dev()
+  (interactive)
+  (load-dart-project dbd:ebisu-ang))
+
+(defun dbd:ebisu-pod-dev()
+  (interactive)
+  (load-dart-project dbd:ebisu-pod))
+
 (defun dbd:plus-dev()
   (interactive)
   (load-dart-project dbd:plus))
@@ -82,6 +92,8 @@
 (dbd:ebisu-cpp-dev)
 (dbd:cpp-ebisu-dev)
 (dbd:ebisu-dev)
+(dbd:ebisu-ang-dev)
+(dbd:ebisu-pod-dev)
 (dbd:ebisu-capnp-dev)
 (dbd:plus-dev)
 (dbd:plus-cpp-dev)

@@ -1,6 +1,33 @@
 (defvar dbd:user (getenv "USER"))
 (defvar dbd:home (file-name-as-directory (getenv "HOME")))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; First require packages and initialize them before trying to load others
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(package-initialize)
+
+(require 'flx-ido)
+(require 'swiper)
+(require 'ivy)
+
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
+;; (add-to-list 'load-path "~/dev/open_source/helm")
+;; (load "helm")
+;; (defun dbd:helm() (interactive)
+;;        (load-file "dbd-helm.el")
+;;        (dbd:configure-helm))
+;; (dbd:helm)
+;; (setq helm-buffer-max-length 40)
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
@@ -18,22 +45,27 @@
        (load-file "dbd-lang-keys.el")
        (dbd:add-lang-keys))
 
-(defun dbd:helm() (interactive)
-       (load-file "dbd-helm.el")
-       (dbd:configure-helm))
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-load-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(setq magit-completing-read-function 'ivy-completing-read)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-(package-initialize)
-
-
-(dbd:helm)
-(setq helm-buffer-max-length 40)
 
 (dbd:global-keys)
 (dbd:lang-keys)
@@ -85,6 +117,7 @@
 
 (require 'color-theme)
 (color-theme-initialize)
+(color-theme-arjen)
 (color-theme-emacs-21)
 (set-face-foreground 'minibuffer-prompt "black")
 
@@ -117,3 +150,9 @@
 
 (load-file "dbd-current-projects.el")
 (load-file "dbd-humor.el")
+
+(setq create-lockfiles nil)
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))

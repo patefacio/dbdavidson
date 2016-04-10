@@ -2,18 +2,26 @@ name: kitchen_sink
 version: 0.0.0
 dependencies:
   args: "any"
-  id:
-    git: git://github.com/patefacio/id
+
   ebisu:
     git: git://github.com/patefacio/ebisu
+
   ebisu_cpp:
     git: git://github.com/patefacio/ebisu_cpp
+    
   json_schema:
     git: git://github.com/patefacio/json_schema
   simple_schema:
     git: git://github.com/patefacio/simple_schema
 
-  crypto: "^0.9.1"    
+  path: any
+  
+  pub:
+    path: /home/dbdavidson/dev/open_source/pub
+
+  crypto: "^0.9.1"
+
+  system_info: "^0.0.16"
 
   unittest: ">=0.11.0"
 
@@ -26,10 +34,15 @@ dependencies:
 
   googleapis: "^0.9.0"
 
+  glob: "^1.1.0"
+
 dependency_overrides:
 
   quiver: "^0.21.0"
 
+#  id: "^1.0.13"
+
+  
   id:
 #    git: git://github.com/patefacio/id
     path: /home/dbdavidson/dev/open_source/id
@@ -41,6 +54,9 @@ dependency_overrides:
   magus:
     path: /home/dbdavidson/dev/open_source/magus
     #git: git://github.com/patefacio/magus
+
+  drudge:
+    path: /home/dbdavidson/dev/open_source/drudge
     
   ebisu_web_ui:
     git: git://github.com/patefacio/ebisu_web_ui
@@ -53,11 +69,22 @@ dependency_overrides:
   ebisu_cpp_db:
 #    git: git://github.com/patefacio/ebisu_cpp_db        
     path: /home/dbdavidson/dev/open_source/ebisu_cpp_db
+
+  ebisu_pod:
+    path: /home/dbdavidson/dev/open_source/ebisu_pod
+  ebisu_msgpack:
+    path: /home/dbdavidson/dev/open_source/ebisu_msgpack
+  ebisu_mongo:
+    path: /home/dbdavidson/dev/open_source/ebisu_mongo    
     
   json_schema:
     git: git://github.com/patefacio/json_schema
 
-  dart_style: "^0.2.0"
+  angular2: "2.0.0-beta.0"
+
+  analyzer: "^0.27.0"
+    
+  dart_style: "^0.2.2"
 #    path: /home/dbdavidson/dev/open_source/dart_style
 #    git: git://github.com/dart-lang/dart_style
 
@@ -68,4 +95,5 @@ dependency_overrides:
     path: /home/dbdavidson/dev/open_source/xgrep
 
   collection: "^1.1.0"
+
 

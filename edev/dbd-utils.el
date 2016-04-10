@@ -96,7 +96,7 @@ buffer is not visiting a file."
     (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
     (setq cmdStr (concat "time " progName " \""   fname "\" " args))
-    (setq buffname (format "R(%s) *%s*" (helm-basename fname) cmdStr))
+    (setq buffname (format "R(%s) *%s*" (file-name-base fname) cmdStr))
 
     (if (string-equal suffix "el")
         (load-file fname)
@@ -319,3 +319,16 @@ File suffix is used to determine what program to run."
   "Search dart project"
   (interactive "sEnter args:")
   (grep (concat "dg --project-path " (buffer-file-name) " "  args)))
+
+
+(defun prelude-open-with ()
+  "Simple function that allows us to open the underlying
+file of a buffer in an external program."
+  (interactive)
+  (when buffer-file-name
+    (shell-command (concat
+                    (if (eq system-type 'darwin)
+                        "open"
+                      (read-shell-command "Open current file with: "))
+                    " "
+                    buffer-file-name))))

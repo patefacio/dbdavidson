@@ -218,7 +218,7 @@ class Builder {
     final locator = new Locator(includes);
 
     final cppFlags = [
-      '--std=c++11',
+      '--std=c++14',
       '-I/home/dbdavidson/dev/open_source/brigand',
     ]..addAll(locator.cppFlags);
     final target = join(Locator._home, 'snippet');

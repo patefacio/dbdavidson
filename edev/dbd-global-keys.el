@@ -17,6 +17,7 @@
   (global-set-key "\C-x\C-c"            'dbd:safeExit)
   (global-set-key "\C-x\C-n"	        'next-error)
   (global-set-key "\C-x\C-p"	        'previous-error)
+  (global-set-key "\C-x\C-j"	        'dired-jump)  
 
   (global-set-key "\C-x\C-g"	        'ibuffer-list-buffers)
   (global-set-key "\C-xb"		'switch-to-buffer)
@@ -30,6 +31,8 @@
   (global-set-key "\M-\e"               'eval-expression)
   (global-set-key "\C-c\C-y"	        'yank-filepath-under-cursor)
   (global-set-key "\C-z"                'comint-stop-subjob)
+
+  (global-set-key "\M-p"                'ace-window)
   
   (message "added global keys")
   )

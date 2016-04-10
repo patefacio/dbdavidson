@@ -116,7 +116,11 @@ main(List<String> args) async {
       '/usr/lib/dart/lib': new PruneSpec(['core_stubs'], [])
     }));
 
-    cppPrune(p) => new PruneSpec([], [join(p, '.git')]);
+    cppPrune(p) => new PruneSpec([],
+        [
+          join(p, '.git')
+    ]);
+
     indices.add(new Index.withPruning(
         idFromString('cm'),
         cppMine
