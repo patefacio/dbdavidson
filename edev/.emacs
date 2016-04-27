@@ -1,5 +1,6 @@
 (defvar dbd:user (getenv "USER"))
 (defvar dbd:home (file-name-as-directory (getenv "HOME")))
+(add-to-list 'load-path (concat dbd:home "dev/open_source/dbdavidson/edev"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; First require packages and initialize them before trying to load others
@@ -50,7 +51,7 @@
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "<f6>") 'ivy-resume)
-(global-set-key (kbd "M-x") 'counsel-M-x)
+;(global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
