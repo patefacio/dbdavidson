@@ -1,1 +1,1 @@
-nice -15 /usr/bin/dart --checked --package-root=$HOME/dev/open_source/dbdavidson/dart/kitchen_sink/packages ~/bin/run_dart.dart "$@"
+nice -15 /usr/bin/dart --checked --package-root=$HOME/dev/open_source/dbdavidson/dart/kitchen_sink/.pub ~/bin/run_dart.dart "$@"

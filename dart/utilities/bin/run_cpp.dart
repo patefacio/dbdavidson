@@ -223,7 +223,7 @@ class Builder {
     ]..addAll(locator.cppFlags);
     final target = join(Locator._home, 'snippet');
     cppFlags.add(filename);
-    cppFlags.addAll(['-o', target, '-lpthread']);
+    cppFlags.addAll(['-g', '-o', target, '-lpthread']);
     cppFlags.addAll(locator.libPaths.map((l) => '-L$l'));
 
     print('Compiling: clang++ ${cppFlags.join(" ")}');

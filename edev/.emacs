@@ -1,5 +1,6 @@
 (defvar dbd:user (getenv "USER"))
 (defvar dbd:home (file-name-as-directory (getenv "HOME")))
+
 (add-to-list 'load-path (concat dbd:home "dev/open_source/dbdavidson/edev"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -10,16 +11,18 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 
-(require 'flx-ido)
+;(require 'flx-ido)
 (require 'swiper)
 (require 'ivy)
+(require 'ffap)
+(ffap-bindings)
 
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
+;(ido-mode 1)
+;(ido-everywhere 1)
+;(flx-ido-mode 1)
 ;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+;(setq ido-enable-flex-matching t)
+;(setq ido-use-faces nil)
 
 ;; (add-to-list 'load-path "~/dev/open_source/helm")
 ;; (load "helm")
@@ -48,7 +51,7 @@
 
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
-(global-set-key "\C-s" 'swiper)
+;(global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "<f6>") 'ivy-resume)
 ;(global-set-key (kbd "M-x") 'counsel-M-x)
@@ -64,7 +67,7 @@
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (setq magit-completing-read-function 'ivy-completing-read)
-
+(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -116,10 +119,13 @@
 ;;       ))
 
 
+(load-file "dbd-current-projects.el")
+
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-arjen)
-(color-theme-emacs-21)
+;(color-theme-arjen)
+					;(color-theme-emacs-21)
+(color-theme-katester)
 (set-face-foreground 'minibuffer-prompt "black")
 
 (defun fr:cg() (interactive)
@@ -149,7 +155,6 @@
 (load-file "capnp-mode.el")
 (add-to-list 'auto-mode-alist '("\\.capnp\\'" . capnp-mode))
 
-(load-file "dbd-current-projects.el")
 (load-file "dbd-humor.el")
 
 (setq create-lockfiles nil)
