@@ -74,6 +74,7 @@ buffer is not visiting a file."
             ("py" . "python")
             ("rb" . "ruby")
             ("rspec" . "rspec")
+	    ("rs" . "rustc")
             ("js" . "js")
             ("jl" . "julia")            
             ("sh" . "bash")
@@ -84,7 +85,8 @@ buffer is not visiting a file."
             ("go" . "rungo.sh")
 ;            ("d" . "rdmd")
             ("d" . "rd")
-            ("dart" . "dart.wrapper")
+					;            ("dart" . (concat dbd:home "bin/run_dart.dart"))
+            ("dart" . "$HOME/bin/run_dart.dart")	    
             ("yaml" . "pub upgrade")
             ("cpp" . "run_cpp.dart -f")
             ("html" . "firefox")
@@ -154,7 +156,7 @@ File suffix is used to determine what program to run."
     (if (string-equal suffix "dart")
         (progn
           (message "Formatting dart code %s" fname)
-          (shell-command (concat "dart " dbd:home "bin/dart_format.dart -f " fname))
+          (shell-command (concat "run_dart.sh " dbd:home "bin/dart_format.dart -f " fname))
           (revert-buffer t t)
           )
       (if (string-equal suffix "cpp")
@@ -274,6 +276,14 @@ File suffix is used to determine what program to run."
            (+ (count-lines 1 (point)) 1)
            (buffer-file-name (current-buffer)))))
 
+(defun subl()
+  (interactive) 
+  (shell-command
+   (format "subl %s:%d &"
+           (buffer-file-name (current-buffer))
+           (+ (count-lines 1 (point)) 1)
+	   )))
+
 (defun dbd:restart-network() (interactive)
        (insert "sudo service network-manager restart"))
 
@@ -320,6 +330,12 @@ File suffix is used to determine what program to run."
   (interactive "sEnter args:")
   (grep (concat "dg --project-path " (buffer-file-name) " "  args)))
 
+(defun maystreet-grep(args)
+  "Search maystreet code"
+  (interactive "sEnter args:")
+  (grep (concat "rg --no-heading -H " args " " dbd:home "dev/maystreet/bellport-v1.0.5528.a08aa/include/"))
+  (save-excursion
+    (set-buffer "*grep*")))
 
 (defun prelude-open-with ()
   "Simple function that allows us to open the underlying
@@ -332,3 +348,7 @@ file of a buffer in an external program."
                       (read-shell-command "Open current file with: "))
                     " "
                     buffer-file-name))))
+
+(defun dbd:xterm()
+  (interactive)
+  (shell-command "/usr/bin/gnome-terminal&"))

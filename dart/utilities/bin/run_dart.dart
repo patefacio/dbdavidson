@@ -12,7 +12,7 @@ final _logger = new Logger('runDart');
 main(List<String> args) async {
   Logger.root.onRecord.listen(
       (LogRecord r) => print("${r.loggerName} [${r.level}]:\t${r.message}"));
-  Logger.root.level = Level.WARNING;
+  Logger.root.level = Level.INFO;
 
   /// iterate over args and find first arg that is a file:
   int i = 0;
@@ -25,7 +25,7 @@ main(List<String> args) async {
     print('Error: run_dart.dart must specify a file to run: $args');
     exit(-1);
   } else {
-    print(args);
+    //    print(args);
     final dartPath = '/usr/lib/dart/lib';
     final dartProgram = args[i];
     final dartArgs = args.sublist(0, i);
@@ -36,8 +36,8 @@ main(List<String> args) async {
       if (parent == '/') {
         return null;
       } else {
-        final potential = join(parent, 'packages');
-        final foundPackages = FileSystemEntity.isDirectorySync(potential);
+        final potential = join(parent, '.packages');
+        final foundPackages = FileSystemEntity.isFileSync(potential);
         return foundPackages? potential : findPackagesPath(parent);
       }
     }
@@ -52,14 +52,15 @@ main(List<String> args) async {
     if (defaultDartPackages != null && !packagesPathExist) {
       _logger.info("Default Dart packages env var set ${defaultDartPackages}");
 
-      if (FileSystemEntity.isDirectorySync(defaultDartPackages)) {
+      if (FileSystemEntity.isFileSync(defaultDartPackages)) {
         _logger.info("Using Default Dart Packages");
-        dartArgs.insert(0, '--package-root=${defaultDartPackages}');
+        dartArgs.insert(0, '--packages=${defaultDartPackages}');
         packagesPath = defaultDartPackages;
       } else {
         _logger.info("Default Dart Packages Not Exist: ${defaultDartPackages}");
       }
     }
+
 
     final subArgs = ['--checked']
       ..addAll(dartArgs)
@@ -67,7 +68,7 @@ main(List<String> args) async {
       ..addAll(programArgs);
 
     _logger.info('Running: '
-        '${Platform.executable} ${dartArgs.join(" ")} ${subArgs.join(" ")}');
+        '${Platform.executable} ${subArgs.join(" ")}');
 
     var linesProcessed = 0;
 

@@ -3,11 +3,11 @@ version: 0.0.0
 dependencies:
   args: "any"
 
-  ebisu:
-    git: git://github.com/patefacio/ebisu
+#  ebisu:
+#    git: git://github.com/patefacio/ebisu
 
-  ebisu_cpp:
-    git: git://github.com/patefacio/ebisu_cpp
+#  ebisu_cpp:
+#    git: git://github.com/patefacio/ebisu_cpp
     
   json_schema:
     git: git://github.com/patefacio/json_schema
@@ -16,8 +16,8 @@ dependencies:
 
   path: any
   
-  pub:
-    path: /home/dbdavidson/dev/open_source/pub
+#  pub:
+#    path: /home/dbdavidson/dev/open_source/pub
 
   crypto: "^0.9.1"
 
@@ -39,6 +39,8 @@ dependencies:
 dependency_overrides:
 
   quiver: "^0.21.0"
+
+  vector_math: any
 
 #  id: "^1.0.13"
 
@@ -72,11 +74,16 @@ dependency_overrides:
 
   ebisu_pod:
     path: /home/dbdavidson/dev/open_source/ebisu_pod
+
   ebisu_msgpack:
-    path: /home/dbdavidson/dev/open_source/ebisu_msgpack
+    #path: /home/dbdavidson/dev/open_source/ebisu_msgpack
+    git: git://github.com/patefacio/ebisu_msgpack
+    
   ebisu_mongo:
     path: /home/dbdavidson/dev/open_source/ebisu_mongo    
-    
+
+  mongo_dart: "^0.2.8"
+  
   json_schema:
     git: git://github.com/patefacio/json_schema
 
@@ -91,9 +98,11 @@ dependency_overrides:
   args: "^0.13.0"
   
   xgrep:
-#    git: git://github.com/patefacio/xgrep
-    path: /home/dbdavidson/dev/open_source/xgrep
+    git: git://github.com/patefacio/xgrep
+#    path: /home/dbdavidson/dev/open_source/xgrep
 
   collection: "^1.1.0"
+
+  html: "0.13.0"
 
 
