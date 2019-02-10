@@ -36,8 +36,6 @@
 ;; (dbd:helm)
 ;; (setq helm-buffer-max-length 40)
 
-(message "BADABING")
-
 (defun dbd:global-keys() (interactive)
        (load "dbd-global-keys.el")
        (dbd:add-global-keys))
@@ -146,5 +144,6 @@
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
 (find-file (concat dbd:home ".emacs"))
+(load-theme 'tango)
 
 (message "DBD Emacs init complete")

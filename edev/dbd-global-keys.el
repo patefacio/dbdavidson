@@ -18,7 +18,9 @@
   (global-set-key "\C-x\C-p"	        'previous-error)
   (global-set-key "\C-x\C-j"	        'dired-jump)
 
-  (global-set-key "\C-x\C-g"	        'ibuffer-list-buffers)
+                                        ;  (global-set-key "\C-x\C-g"	        'ibuffer-list-buffers)
+  (global-set-key "\C-x\C-g"	        'ibuffer)
+  (global-set-key "\C-x\C-b"	        'buffer-menu)
   (global-set-key "\C-xb"		'switch-to-buffer)
 
   (global-set-key "\C-c!"               'run-current-file)
