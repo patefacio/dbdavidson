@@ -1,5 +1,5 @@
 (defun dbd:safeExit()
-  (interactive) 
+  (interactive)
   (if (yes-or-no-p "Are you sure you want to exit? ")
       (save-buffers-kill-emacs)
     nil))
@@ -12,27 +12,27 @@
 (defun dbd:add-global-keys()
   (interactive)
 
-  (global-set-key "\C-x!"		'shell-command)       
+  (global-set-key "\C-x!"		'shell-command)
   (global-set-key "\C-x\C-c"            'dbd:safeExit)
   (global-set-key "\C-x\C-n"	        'next-error)
   (global-set-key "\C-x\C-p"	        'previous-error)
-  (global-set-key "\C-x\C-j"	        'dired-jump)  
+  (global-set-key "\C-x\C-j"	        'dired-jump)
 
   (global-set-key "\C-x\C-g"	        'ibuffer-list-buffers)
   (global-set-key "\C-xb"		'switch-to-buffer)
-  
+
   (global-set-key "\C-c!"               'run-current-file)
   (global-set-key "\C-c@"               'run-current-file-prompt)
   (global-set-key "\C-c#"               'format-current-file)
 
-  (global-set-key "\C-xp"               'other-window-backward)  
+  (global-set-key "\C-xp"               'other-window-backward)
   (global-set-key "\M-g"                'goto-line)
   (global-set-key "\M-\e"               'eval-expression)
   (global-set-key "\C-c\C-y"	        'yank-filepath-under-cursor)
   (global-set-key "\C-z"                'comint-stop-subjob)
 
   (global-set-key "\M-p"                'ace-window)
-  
+
   (message "added global keys")
   )
 
@@ -58,10 +58,12 @@
            (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
            (setq magit-completing-read-function 'ivy-completing-read)
            (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-           
+
            )
          ))
 
 
+(eval-after-load 'emacs-lisp-mode
+  '(define-key "\C-j" 'eval-last-sexp))
 
 (message "DBD INIT - Global keys available `dbd:add-global-keys`")

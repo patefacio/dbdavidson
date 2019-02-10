@@ -21,7 +21,7 @@
 
 (defun md-code()
   "Indent the region to 4 spaces"
-  (interactive)  
+  (interactive)
   (indent-rigidly (region-beginning) (region-end) 4))
 
 (defun sudo-edit (&optional arg)
@@ -73,17 +73,15 @@ buffer is not visiting a file."
             ("rspec" . "rspec")
 	    ("rs" . "rustc")
             ("js" . "js")
-            ("jl" . "julia")            
+            ("jl" . "julia")
             ("sh" . "bash")
             ("bash" . "bash")
             ("ml" . "ocaml")
             ("vbs" . "cscript")
             ("java" . "javac")
             ("go" . "rungo.sh")
-;            ("d" . "rdmd")
             ("d" . "rd")
-					;            ("dart" . (concat dbd:home "bin/run_dart.dart"))
-            ("dart" . "$HOME/bin/run_dart.dart")	    
+            ("dart" . "dart")
             ("yaml" . "pub upgrade")
             ("cpp" . "run_cpp.dart -f")
             ("html" . "firefox")
@@ -137,7 +135,7 @@ File suffix is used to determine what program to run."
          (set-frame-name "CG")
          (toggle-frame-maximized)
          (color-theme-wheat)
-         (set-face-foreground 'minibuffer-prompt "black")         
+         (set-face-foreground 'minibuffer-prompt "black")
          (setq compilation-buffer (run-current-file))
          (message "CG buffer is %s" (type-of compilation-buffer))
                                         ;(switch-to-buffer compilation-buffer)
@@ -178,7 +176,7 @@ File suffix is used to determine what program to run."
 
 
 (defun google.com (desideratum) (interactive "sEnter search key: ")
-  (let ((search-tag 
+  (let ((search-tag
          (concat "http://www.google.com/search?q='"
                  desideratum
                  "'&safe&as_sitesearch=.com")))
@@ -186,7 +184,7 @@ File suffix is used to determine what program to run."
     (org-open-link-from-string search-tag)))
 
 (defun google.org (desideratum) (interactive "sEnter search key: ")
-  (let ((search-tag 
+  (let ((search-tag
          (concat "http://www.google.com/search?q='"
                  desideratum
                  "'&safe&as_sitesearch=.org")))
@@ -196,23 +194,23 @@ File suffix is used to determine what program to run."
 (princ (url-encode-url "https://www.google.com/search?q=%27c++%27&safe=&as_sitesearch=.org&gws_rd=ssl"))
 
 (defun google (desideratum) (interactive "sEnter search key: ")
-  (let ((search-tag 
+  (let ((search-tag
          (concat "http://www.google.com/search?q='"
                  desideratum
                  "'&safe")))
     (message (concat "Searching for: " search-tag))
     (org-open-link-from-string search-tag)))
 
-(defun my-mongo ( )   
-   (interactive)   
+(defun my-mongo ( )
+   (interactive)
    (setq cmd (format "mongod --dbpath=%s/data/mongo_data -vvvvv" dbd:home))
-   (comint-simple-send (make-comint "my-mongo" "bash") cmd)) 
+   (comint-simple-send (make-comint "my-mongo" "bash") cmd))
 
-(defun my-mongo-client ( )   
-   (interactive)   
-   (setq cmd "mongo")   
+(defun my-mongo-client ( )
+   (interactive)
+   (setq cmd "mongo")
    (comint-simple-send (make-comint "mongo-client" "bash") cmd)
-   ) 
+   )
 
 (defun mongo-shutdown()
   (shell-command "pkill -15 mongod"))
@@ -246,17 +244,17 @@ File suffix is used to determine what program to run."
   (uniquify-all-lines-region (point-min) (point-max)))
 
 
-(defun xgrep(strarg) 
+(defun xgrep(strarg)
 "Does generic call to xgrep"
-(interactive "sEnter args:") 
+(interactive "sEnter args:")
   (grep (format "xgrep.rb %s" strarg))
   (save-excursion
     (set-buffer "*grep*")
     (rename-buffer (format "* grep:(%s)" strarg))))
 
-(defun ixgrep(strarg) 
+(defun ixgrep(strarg)
 "Does generic call to xgrep"
-(interactive "sEnter args:") 
+(interactive "sEnter args:")
   (grep (format "xgrep.rb -i %s" strarg))
   (save-excursion
     (set-buffer "*grep*")
@@ -267,14 +265,14 @@ File suffix is used to determine what program to run."
   (insert "find . -name \\*~ -print | xargs rm"))
 
 (defun gvim()
-  (interactive) 
+  (interactive)
   (shell-command
    (format "gvim +%d %s &"
            (+ (count-lines 1 (point)) 1)
            (buffer-file-name (current-buffer)))))
 
 (defun subl()
-  (interactive) 
+  (interactive)
   (shell-command
    (format "subl %s:%d &"
            (buffer-file-name (current-buffer))

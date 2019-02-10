@@ -92,6 +92,20 @@
 (setq create-lockfiles nil)
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
+(setq next-line-add-newlines nil)
+(setq default-fill-column 78)
+(setq default-major-mode 'text-mode)
+(setq delete-key-deletes-forward nil)
+(setq display-time-day-and-date t)
+(setq enable-recursive-minibuffers t)
+(setq font-lock-maximum-decoration t)
+(setq-default indent-tabs-mode nil)
+(setq kept-new-versions 2)
+(setq kept-old-versions 2)
+(setq version-control t)
+(setq window-min-height 1)
+(setq line-number-mode t)
+(global-linum-mode)
 
 ;; This is brought in by magit but don't want it
 (fmakunbound 'ido-enter-magit-status)
@@ -108,5 +122,29 @@
 ;;       `((".*" . ,temporary-file-directory)))
 ;; (setq auto-save-file-name-transforms
 ;;       `((".*" ,temporary-file-directory t)))
+
+
+;(add-hook 'emacs-lisp-mode-hook
+;          (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+
+
+(mapcar
+ (lambda (mode-hook)
+   (progn
+     (add-hook
+      mode-hook
+      (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+     ))
+ (list 'emacs-lisp-mode-hook 'c-mode-hook))
+
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
+(find-file (concat dbd:home ".emacs"))
 
 (message "DBD Emacs init complete")
