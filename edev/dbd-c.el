@@ -27,6 +27,13 @@
 (defun dbd:c++-mode-hook () (dbd:c-mode-hook))
 (add-hook 'c++-mode-hook 'dbd:c++-mode-hook)
 (add-hook 'c-mode-hook 'dbd:c-mode-hook)
+(add-hook 'c-mode-common-hook
+  (lambda()
+    (add-hook 'write-contents-functions
+      (lambda()
+        (save-excursion
+          (delete-trailing-whitespace))))))
+
 
 ;; cpp macros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -45,3 +52,5 @@
                ""
                (format ", %s" separator)
                ))))
+
+(message "DBD INIT - C(PP) [ `cpp:main`, `cpp:insertHardBreak`,...]")

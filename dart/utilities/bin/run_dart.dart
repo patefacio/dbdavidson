@@ -33,7 +33,7 @@ main(List<String> args) async {
 
     String findPackagesPath(p) {
       final parent = dirname(p);
-      if (parent == '/') {
+      if (parent == '/' || parent == p) {
         return null;
       } else {
         final potential = join(parent, '.packages');
@@ -62,11 +62,12 @@ main(List<String> args) async {
     }
 
 
-    final subArgs = ['--checked']
+    final subArgs = <String>[]
       ..addAll(dartArgs)
       ..add(dartProgram)
       ..addAll(programArgs);
 
+    print("DART ARGS $args");
     _logger.info('Running: '
         '${Platform.executable} ${subArgs.join(" ")}');
 
@@ -118,7 +119,7 @@ String transformLine(
       var line = match[2];
       var column = match[3];
       final trailing = match[4];
-      if (column == null) line = 1;
+      if (column == null) line = '1';
       final pre = originalLine.substring(0, match.start);
       updated = '$pre$fname:$line:$column$trailing';
     } else if ((match = _compilerErrorLineRe.firstMatch(originalLine)) !=

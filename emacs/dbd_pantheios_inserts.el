@@ -1,8 +1,0 @@
-(defun pan:dlog-emergency() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_EMERGENCY, ...);"))
-(defun pan:dlog-alert() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_ALERT, ...);"))
-(defun pan:dlog-critical() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_CRITICAL, ...);"))
-(defun pan:dlog-error() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_ERROR, ...);"))
-(defun pan:dlog-warning() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_WARNING, ...);"))
-(defun pan:dlog-notice() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_NOTICE, ...);"))
-(defun pan:dlog-informational() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_INFORMATIONAL, ...);"))
-(defun pan:dlog-debug() (interactive) (insert "pantheios::log(PANTHEIOS_SEV_DEBUG, ...);"))

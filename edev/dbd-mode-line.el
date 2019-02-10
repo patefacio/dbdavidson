@@ -175,3 +175,5 @@
 ;;        ;; minor-mode-alist  ;; list of minor modes
 ;;        "%-" ;; fill with '-'
 ;;        ))
+
+(message "DBD INIT - Mode line set")

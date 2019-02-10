@@ -32,8 +32,8 @@
     (dired-maybe-insert-subdir "cpp/app")
     (dired-maybe-insert-subdir (concat "cpp/" namespace))
     (dired-maybe-insert-subdir "cpp/tests")
-    (dired-maybe-insert-subdir "cmake_build")
-    (dired "cmake_build/debug")
+    ;(dired-maybe-insert-subdir "cmake_build")
+    ;(dired "cmake_build/debug")
     (named-shell (concat "BLD(" (file-name-base (directory-file-name dir)) ")")))
   )
 
@@ -89,16 +89,48 @@
   (file-name-as-directory dbd:home)
   "dev/open_source/dbdavidson/edev/.emacs"))
 
-(dbd:ebisu-cpp-dev)
-(dbd:cpp-ebisu-dev)
-(dbd:ebisu-dev)
-(dbd:ebisu-ang-dev)
-(dbd:ebisu-pod-dev)
-(dbd:ebisu-capnp-dev)
-(dbd:plus-dev)
-(dbd:plus-cpp-dev)
+(cond (nil (progn
+             (dbd:ebisu-cpp-dev)
+             (dbd:cpp-ebisu-dev)
+             (dbd:ebisu-dev)
+             (dbd:ebisu-ang-dev)
+             (dbd:ebisu-pod-dev)
+             (dbd:ebisu-capnp-dev)
+             (dbd:plus-dev)
+             (dbd:plus-cpp-dev))))
 
 (defun dbd:webstorm() (interactive)
        (shell-command
         (concat (file-name-as-directory dbd:home)
                 "install/WebStorm-141.1550/bin/webstorm.sh&")))
+
+
+;; (defun fr:cg() (interactive)
+;;        (let ((color-theme-is-global nil))
+;;          (select-frame (make-frame))
+;;          (set-frame-name "code generation")
+;;          (color-theme-scintilla)
+;;          (set-face-foreground 'minibuffer-prompt "black")
+;;          ))
+
+;; (defun fr:run() (interactive)
+;;        (let ((color-theme-is-global nil))
+;;          (select-frame (make-frame))
+;;          (set-frame-name "run")         
+;;          (color-theme-rotor)
+;;          (set-face-foreground 'minibuffer-prompt "black")
+;;          ))
+
+;; (load-file "capnp-mode.el")
+;; (add-to-list 'auto-mode-alist '("\\.capnp\\'" . capnp-mode))
+
+;; (setq custom-re "// custom <\\(.*\\)>\\(?:.*\\|\n\\)*// end <\\1>")
+
+;; ;;; Following enables jump to written files from ebisu codeten
+;; (add-to-list 'compilation-error-regexp-alist
+;;              '("\\(Wrote\\|Created\\):[ ]*\\(.*\\)" 2 nil nil))
+
+
+(message "DBD Current Projects - C(PP) [ `dbd:ebisu-cpp-dev`,...]")
+
+

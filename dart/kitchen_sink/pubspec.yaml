@@ -3,30 +3,11 @@ version: 0.0.0
 dependencies:
   args: "any"
 
-#  ebisu:
-#    git: git://github.com/patefacio/ebisu
+#  simple_schema:
+#    git: git://github.com/patefacio/simple_schema
 
-#  ebisu_cpp:
-#    git: git://github.com/patefacio/ebisu_cpp
-    
-  json_schema:
-    git: git://github.com/patefacio/json_schema
-  simple_schema:
-    git: git://github.com/patefacio/simple_schema
 
-  path: any
-  
-#  pub:
-#    path: /home/dbdavidson/dev/open_source/pub
-
-  crypto: "^0.9.1"
-
-  system_info: "^0.0.16"
-
-  unittest: ">=0.11.0"
-
-  xml: "^2.2.3"
-  test: "^0.12.0"
+  test: "^1.0.0"
 
   prettify: any
 
@@ -36,73 +17,80 @@ dependencies:
 
   glob: "^1.1.0"
 
+  intl: "^0.15.1"
+
+  csv: "^3.1.2"
+
+  async: "^2.0.7"
+
 dependency_overrides:
 
-  quiver: "^0.21.0"
+  shelf_web_socket: "^0.2.2+2"
+  
+  utf: "^0.9.0+4"
+
+  mime: "^0.9.6+1"
+  
+  xml: "^3.0.0"
+  
+  path: "^1.6.1"
+  
+  quiver: "^0.29.0"
 
   vector_math: any
 
-#  id: "^1.0.13"
-
-  
   id:
-#    git: git://github.com/patefacio/id
-    path: /home/dbdavidson/dev/open_source/id
+    path: ../../../id
 
   ebisu:
-#    git: git://github.com/patefacio/ebisu
-    path: /home/dbdavidson/dev/open_source/ebisu
+    path: ../../../ebisu
+
+  ebisu_rs:
+    path: ../../../ebisu_rs
 
   magus:
-    path: /home/dbdavidson/dev/open_source/magus
-    #git: git://github.com/patefacio/magus
+    path: ../../../magus
 
-  drudge:
-    path: /home/dbdavidson/dev/open_source/drudge
+#  sqljocky: "^0.14.1"
+  sqljocky:
+    path: /Users/dbdavidson/dev/open_source/sqljocky
+
+  crypto: ">=2.0.0 <3.0.0"
     
-  ebisu_web_ui:
-    git: git://github.com/patefacio/ebisu_web_ui
-#    path: /home/dbdavidson/dev/open_source/ebisu_web_ui
-    
+  postgres: "^0.9.5"
+
+  postgresql: "^0.3.4+1"  
+
+
   ebisu_cpp:
-#    git: git://github.com/patefacio/ebisu_cpp    
-    path: /home/dbdavidson/dev/open_source/ebisu_cpp
+    path: ../../../ebisu_cpp
 
   ebisu_cpp_db:
-#    git: git://github.com/patefacio/ebisu_cpp_db        
-    path: /home/dbdavidson/dev/open_source/ebisu_cpp_db
+    path: ../../../ebisu_cpp_db
 
   ebisu_pod:
-    path: /home/dbdavidson/dev/open_source/ebisu_pod
+    path: ../../../ebisu_pod
 
-  ebisu_msgpack:
-    #path: /home/dbdavidson/dev/open_source/ebisu_msgpack
-    git: git://github.com/patefacio/ebisu_msgpack
-    
   ebisu_mongo:
-    path: /home/dbdavidson/dev/open_source/ebisu_mongo    
+    path: ../../../ebisu_mongo    
 
   mongo_dart: "^0.2.8"
   
   json_schema:
-    git: git://github.com/patefacio/json_schema
+    path: ../../../json_schema      
 
-  angular2: "2.0.0-beta.0"
-
-  analyzer: "^0.27.0"
+#  angular2: "2.0.0-beta.0"
     
-  dart_style: "^0.2.2"
-#    path: /home/dbdavidson/dev/open_source/dart_style
+#  dart_style: "^0.2.16"
+#    path: ../../../dart_style
 #    git: git://github.com/dart-lang/dart_style
 
-  args: "^0.13.0"
+  args: "^1.4.3"
+
+  collection: "^1.14.10"  
+
+  dart_style: "^1.1.0"
   
-  xgrep:
-    git: git://github.com/patefacio/xgrep
-#    path: /home/dbdavidson/dev/open_source/xgrep
-
-  collection: "^1.1.0"
-
-  html: "0.13.0"
+  html: "^0.13.3+1"
 
 

@@ -22,3 +22,5 @@
             (ibuffer-switch-to-saved-filter-groups "plusauri")))
 (setq ibuffer-expert t)
 (setq ibuffer-show-empty-filter-groups nil)
+
+(message "DBD INIT - ibuffer")

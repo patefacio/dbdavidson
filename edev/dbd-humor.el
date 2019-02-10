@@ -219,3 +219,5 @@ Spock: I find that remark insulting. (\"Star Trek\")"
 (defun dbd:humor()
   (interactive)
   (insert (nth (random (length dbd:sarcasms)) dbd:sarcasms)))
+
+(message "DBD Init - Humor [ `dbd:humor`,...]")

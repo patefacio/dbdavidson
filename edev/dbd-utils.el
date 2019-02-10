@@ -1,5 +1,5 @@
-(defun dbd:restart-network() (interactive)
-       (insert "sudo service network-manager restart"))
+;(defun dbd:restart-network() (interactive)
+;       (insert "sudo service network-manager restart"))
 
 (defun clear-eshell ()
   "Clear the eshell buffer."
@@ -9,10 +9,9 @@
     (message "erase eshell buffer")))
 
 (defun magit()
-  "Run magit-status on current file"
-  (interactive)
-  (magit-status (file-name-directory buffer-file-name)))
-
+  "Run magit-status"
+  (interactive) ()
+  (magit-status))
 
 (defun fill-indented()
   "Set the fill column to 70 and then fill-paragraph"
@@ -47,8 +46,6 @@ buffer is not visiting a file."
   (save-excursion
     (cd dir)
     (shell (format "*sh (%s)*" dir))))
-
-
 
 (defun run-current-file-args-with (args cmd)
   (let (fname cmdStr buffname)
@@ -287,7 +284,6 @@ File suffix is used to determine what program to run."
 (defun dbd:restart-network() (interactive)
        (insert "sudo service network-manager restart"))
 
-
 (defun kill-all-dired-buffers()
       "Kill all dired buffers."
       (interactive)
@@ -330,13 +326,6 @@ File suffix is used to determine what program to run."
   (interactive "sEnter args:")
   (grep (concat "dg --project-path " (buffer-file-name) " "  args)))
 
-(defun maystreet-grep(args)
-  "Search maystreet code"
-  (interactive "sEnter args:")
-  (grep (concat "rg --no-heading -H " args " " dbd:home "dev/maystreet/bellport-v1.0.5528.a08aa/include/"))
-  (save-excursion
-    (set-buffer "*grep*")))
-
 (defun prelude-open-with ()
   "Simple function that allows us to open the underlying
 file of a buffer in an external program."
@@ -349,6 +338,4 @@ file of a buffer in an external program."
                     " "
                     buffer-file-name))))
 
-(defun dbd:xterm()
-  (interactive)
-  (shell-command "/usr/bin/gnome-terminal&"))
+(message "DBD INIT - Utils available [ `run-current-file-file`, `dbd:kill-async-buffers`,...]")

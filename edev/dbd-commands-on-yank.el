@@ -22,3 +22,5 @@
 
 (defun do-command-on-yank(command) (interactive "sEnter command: ")
   (my-shell-command (format "%s %s" command (car kill-ring))))
+
+(message "DBD INIT - Commands on yank [ `load-filepath-under-cursor`, `yank-filepath-under-cursor`,...]")

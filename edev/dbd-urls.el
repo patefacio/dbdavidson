@@ -39,3 +39,4 @@
   (interactive)
   (org-open-link-from-string "http://blogs.wsj.com/moneybeat/"))
 
+(message "DBD INIT - Urls available [ `url:ebisu`, `url:wsjblogs`,...]")

@@ -158,3 +158,5 @@
 
 (defun org-code-block () (interactive)
        (insert "#+BEGIN_SRC C++\n\n#+END_SRC"))
+
+(message "DBD INIT - org-mode [ `org-code-block`,... ]")
