@@ -144,6 +144,6 @@
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
 (find-file (concat dbd:home ".emacs"))
-(load-theme 'tango)
+(load-theme 'leuven)
 
 (message "DBD Emacs init complete")
