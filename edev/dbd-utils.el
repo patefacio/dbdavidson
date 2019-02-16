@@ -103,7 +103,7 @@ buffer is not visiting a file."
             (message (concat "Running:" cmdStr))
             (if (not (eq nil (get-buffer buffname))) (kill-buffer buffname))
             (setq compilation-scroll-output t)
-            (compile cmdStr t)
+            (compile cmdStr nil)
                                         ;            (shell-command cmdStr buffname)
             ;(comint-exec buffname cmdStr)
             (toggle-truncate-lines t)
@@ -144,6 +144,24 @@ File suffix is used to determine what program to run."
          ;(define-key compilation-mode-map (kbd "~") 'cg:written)
          (next-window)
          ))
+
+(defun format-current-file ()
+  (interactive)
+  (let ((fname (buffer-file-name))
+        (suffix (file-name-extension (buffer-file-name))))
+    (let ((formatter
+           (cdr
+            (assoc suffix '(
+                            ("dart" . "dartfmt -w")
+                            ("rs" . "rustformat.sh")
+                            ("ex". "mixformat.sh")
+                            ("exs" . "mixformat.sh"))))
+           ))
+      (if formatter
+          (shell-command
+           (format "%s %s" formatter fname))
+        (message (concat "No formatter for type:" suffix))))
+    ))
 
 (defun format-current-file ()
   (interactive)
