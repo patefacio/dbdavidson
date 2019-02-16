@@ -143,6 +143,7 @@
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
+(global-auto-revert-mode t)
 (find-file (concat dbd:home ".emacs"))
 (load-theme 'leuven)
 
