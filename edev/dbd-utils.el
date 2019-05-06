@@ -50,7 +50,7 @@ buffer is not visiting a file."
 (defun run-current-file-args-with (args cmd)
   (let (fname cmdStr buffname)
     (setq fname (buffer-file-name))
-    (setq cmdStr (format "time %s %s %s" cmd fname args))
+    (setq cmdStr (format "%s %s %s" cmd fname args))
     (setq buffname (format "%s*" cmdStr))
     (save-excursion
       (message (concat "Running:" cmdStr))
@@ -93,7 +93,7 @@ buffer is not visiting a file."
     (setq fname (buffer-file-name))
     (setq suffix (file-name-extension fname))
     (setq progName (cdr (assoc suffix extention-alist)))
-    (setq cmdStr (concat "time " progName " \""   fname "\" " args))
+    (setq cmdStr (concat progName " \""   fname "\" " args))
     (setq buffname (format "R(%s) *%s*" (file-name-base fname) cmdStr))
 
     (if (string-equal suffix "el")
@@ -354,5 +354,22 @@ file of a buffer in an external program."
                       (read-shell-command "Open current file with: "))
                     " "
                     buffer-file-name))))
+
+
+(setq dir:plusauri (concat dbd:home "dev/open_source/plusauri"))
+(setq dir:plusauri-rust (concat dbd:home "dev/open_source/plusauri/rust"))
+(setq dir:plusauri-dart (concat dbd:home "dev/open_source/plusauri/dart"))
+
+(eval-after-load "grep"
+  '(grep-compute-defaults))
+
+(defun rg-rs-plusauri (arg)
+  (interactive "sNeedle: ")
+  (rgrep arg "*.rs" dir:plusauri-rust nil))
+
+
+
+;(rgrep "PodObject" "*.dart" "/Users/dbdavidson/dev/open_source/plusauri/dart" nil)
+;(rgrep "PodMap" "*.dart" "/Users/dbdavidson/dev/open_source/plusauri/dart" nil)
 
 (message "DBD INIT - Utils available [ `run-current-file-file`, `dbd:kill-async-buffers`,...]")

@@ -131,6 +131,14 @@
 ;;              '("\\(Wrote\\|Created\\):[ ]*\\(.*\\)" 2 nil nil))
 
 
+(string-match "(\\(.*\\)[ ]+\\(.*\\):\\(\\d*\\)" "fff (tasks) lib/tasks.ex:95: anonymous fn/3 in Tasks.validate_schemas/0")
+
+;(string-match "\\(.*\\)[ ]+(.*):" "(tasks) lib/tasks.ex:95: anonymous fn/3 in Tasks.validate_schemas/0")
+
+(add-to-list 'compilation-error-regexp-alist
+             '("\\(.*\\)[ ]+\\(.*\\):\\(\\d*\\)" 2 nil nil))
+
+
 (message "DBD Current Projects - C(PP) [ `dbd:ebisu-cpp-dev`,...]")
 
 

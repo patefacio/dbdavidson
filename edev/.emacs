@@ -147,4 +147,50 @@
 (find-file (concat dbd:home ".emacs"))
 (load-theme 'leuven)
 
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+(defun run-in-compile(command)
+  (message (concat "Running:" command))
+  (setq compilation-scroll-output t)
+  (compile command nil)
+  (toggle-truncate-lines t)
+  (set-buffer "*compilation*")
+  (setq resultBuff (current-buffer))
+  (rename-buffer (format "*x* -> %s" command))
+  )
+
+(defun x:compile-run (command)
+  (interactive "sEnter command:")
+  (run-in-compile command))
+
+(load "dbd-plusauri.el")
+
 (message "DBD Emacs init complete")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" default)))
+ '(package-selected-packages
+   (quote
+    (alect-themes abyss-theme yaml-mode which-key theme-looper scala-mode rvm racket-mode racer php-mode paredit org magit lispy julia-shell julia-repl helm emacsql-mysql elixir-yasnippets dart-mode counsel command-log-mode cargo alchemist adoc-mode)))
+ '(show-paren-mode t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(match ((t (:background "#000000" :weight bold)))))
+
+
+
+(load-theme 'alect-light t)
+(load-theme 'abyss t)
